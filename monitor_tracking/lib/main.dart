@@ -1,24 +1,30 @@
 // import 'features/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:monitor_tracking/features/app/models/user_model.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import '__mock__/data.dart' as data;
 
 import 'animations.dart';
 
 import 'features/app/widgets/navigation/bottom_navigation.dart';
-import 'features/app/widgets/navigation/disappearing_bottom_navigation_bar.dart';  // Add import
-import 'features/app/widgets/navigation/disappearing_navigation_rail.dart'; 
+import 'features/app/widgets/navigation/disappearing_bottom_navigation_bar.dart'; // Add import
+import 'features/app/widgets/navigation/disappearing_navigation_rail.dart';
 
 import 'features/app/widgets/customs/animated_floating_action_button.dart';
 
 import 'features/app/widgets/listView/email_list_view.dart';
 
-import 'features/app/widgets/detailView/reply_list_view.dart'; 
+import 'features/app/widgets/detailView/reply_list_view.dart';
 
-import 'features/app/widgets/navigation/transitions/list_detail_transition.dart'; 
+import 'features/app/widgets/navigation/transitions/list_detail_transition.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const TrackingApp());
 }
 
@@ -53,6 +59,17 @@ class TrackingApp extends StatelessWidget {
 
       theme: ThemeData.light(useMaterial3: true),
       home: Feed(currentUser: data.user_0),
+
+      //   onGenerateRoute: (RouteSettings settings) {
+      //     switch (settings.name) {
+      //  case '/':
+      //    return MaterialPageRoute(builder: (context)=> Feed());
+      //    break;
+      //  case '/second':
+      //    return MaterialPageRoute(builder: (context)=> SecondPage());
+      //    break;
+      //   }
+      //   },
     );
   }
 }
@@ -82,7 +99,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
   late final _railAnimation = RailAnimation(parent: _controller);
   late final _railFabAnimation = RailFabAnimation(parent: _controller);
   late final _barAnimation = BarAnimation(parent: _controller);
-    
+
   int selectedIndex = 0;
 
   // bool wideScreen = false;
@@ -143,7 +160,6 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
               Expanded(
                 child: Container(
                   color: _backgroundColor,
-
                   child: ListDetailTransition(
                     animation: _railAnimation,
                     one: EmailListView(
@@ -157,7 +173,6 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
                     ),
                     two: const ReplyListView(),
                   ),
-                  
                 ),
               ),
             ],
@@ -181,3 +196,13 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     );
   }
 }
+
+
+// class SecondPage extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() {
+//     // TODO: implement createState
+//     throw UnimplementedError();
+//   }
+  
+// }
