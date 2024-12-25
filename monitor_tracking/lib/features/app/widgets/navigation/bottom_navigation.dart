@@ -8,8 +8,8 @@ class BottomNavbar {
 }
 
 const List<BottomNavbar> bottomNavbar = <BottomNavbar>[
-  BottomNavbar(Icons.inbox_rounded, 'Inbox'),
-  BottomNavbar(Icons.article_outlined, 'Articles'),
-  BottomNavbar(Icons.messenger_outline_rounded, 'Messages'),
-  BottomNavbar(Icons.group_outlined, 'Groups'),
+  BottomNavbar(Icons.inbox_rounded, 'Home'),
+  BottomNavbar(Icons.article_outlined, 'Saved'),
+  BottomNavbar(Icons.messenger_outline_rounded, 'Infor'),
+  BottomNavbar(Icons.group_outlined, 'Settings'),
 ];
