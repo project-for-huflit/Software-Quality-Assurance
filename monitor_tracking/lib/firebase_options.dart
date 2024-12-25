@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
+import 'env/provider.dart';
+
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -40,50 +42,49 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDAd7nOmwG9Q3So1hcT6TbYscWAuJM4Skk',
-    appId: '1:920894541622:web:91b1e4769e814a42f3ad97',
-    messagingSenderId: '920894541622',
-    projectId: 'tracking-expense-79899',
-    authDomain: 'tracking-expense-79899.firebaseapp.com',
-    storageBucket: 'tracking-expense-79899.firebasestorage.app',
-    measurementId: 'G-SR1K82QKLW',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: webConfig.apiKey,
+    appId: webConfig.appId,
+    messagingSenderId: webConfig.messagingSenderId,
+    projectId: webConfig.projectId,
+    authDomain: webConfig.authDomain,
+    storageBucket: webConfig.storageBucket,
+    measurementId: webConfig.measurementId,
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDSFTr6iXT0e6T_XylX-M16pK-t6sObefw',
-    appId: '1:920894541622:android:5faf2fb5ebc9b159f3ad97',
-    messagingSenderId: '920894541622',
-    projectId: 'tracking-expense-79899',
-    storageBucket: 'tracking-expense-79899.firebasestorage.app',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: androidConfig.apiKey,
+    appId: androidConfig.appId,
+    messagingSenderId: androidConfig.messagingSenderId,
+    projectId: androidConfig.projectId,
+    storageBucket: androidConfig.storageBucket,
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCbdh9d5rW36cdz7_TLrFjkOTWbuoa5f2A',
-    appId: '1:920894541622:ios:d82108a2ea2b0a45f3ad97',
-    messagingSenderId: '920894541622',
-    projectId: 'tracking-expense-79899',
-    storageBucket: 'tracking-expense-79899.firebasestorage.app',
-    iosBundleId: 'com.example.monitorTracking',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: iosConfig.apiKey,
+    appId: iosConfig.appId,
+    messagingSenderId: iosConfig.messagingSenderId,
+    projectId: iosConfig.projectId,
+    storageBucket: iosConfig.storageBucket,
+    iosBundleId: iosConfig.iosBundleId,
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCbdh9d5rW36cdz7_TLrFjkOTWbuoa5f2A',
-    appId: '1:920894541622:ios:d82108a2ea2b0a45f3ad97',
-    messagingSenderId: '920894541622',
-    projectId: 'tracking-expense-79899',
-    storageBucket: 'tracking-expense-79899.firebasestorage.app',
-    iosBundleId: 'com.example.monitorTracking',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: macosConfig.apiKey,
+    appId: macosConfig.appId,
+    messagingSenderId: macosConfig.messagingSenderId,
+    projectId: macosConfig.projectId,
+    storageBucket: macosConfig.storageBucket,
+    iosBundleId: macosConfig.iosBundleId,
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDAd7nOmwG9Q3So1hcT6TbYscWAuJM4Skk',
-    appId: '1:920894541622:web:8dbd4c9b8b7fcc93f3ad97',
-    messagingSenderId: '920894541622',
-    projectId: 'tracking-expense-79899',
-    authDomain: 'tracking-expense-79899.firebaseapp.com',
-    storageBucket: 'tracking-expense-79899.firebasestorage.app',
-    measurementId: 'G-EVH2N4M8LF',
+  static FirebaseOptions windows = FirebaseOptions(
+    apiKey: windowsConfig.apiKey,
+    appId: windowsConfig.appId,
+    messagingSenderId: windowsConfig.messagingSenderId,
+    projectId: windowsConfig.projectId,
+    authDomain: windowsConfig.authDomain,
+    storageBucket: windowsConfig.storageBucket,
+    measurementId: windowsConfig.measurementId,
   );
-
 }

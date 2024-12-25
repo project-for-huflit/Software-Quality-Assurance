@@ -12,7 +12,7 @@ class LoginScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min, 
+          mainAxisSize: MainAxisSize.min,
           children: [
             ElevatedButton(
               // Within the LoginScreen widget

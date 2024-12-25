@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 class HomeApp extends StatelessWidget {
-  const HomeApp({ super.key, required String context });
+  const HomeApp({super.key, required String context});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement == 
+    // TODO: implement ==
     return const Placeholder();
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

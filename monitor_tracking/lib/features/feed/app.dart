@@ -69,16 +69,17 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  static const TextStyle optionStyle = 
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold, );
+  static const TextStyle optionStyle = TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+  );
 
   static const List<Widget> _widgetOptions = <Widget>[
     Center(
         child: Text(
-        'Index 0: One',
-        style: optionStyle,
-      )
-    ),
+      'Index 0: One',
+      style: optionStyle,
+    )),
     Text(
       'Index 1: Two',
       style: optionStyle,
@@ -95,7 +96,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
 
   void _onItemTapped(int index) {
     setState(() {
-      selectedIndex = index;  
+      selectedIndex = index;
     });
   }
 
@@ -156,4 +157,3 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     );
   }
 }
-

@@ -1,0 +1,159 @@
+## Git branching model
+
+- Trung tâm kho lưu trữ giữ 2 nhánh chính trong suốt vòng đời phát triển sản phẩm
+
+* main
+* develop
+
+- origin/main là nhánh chính nơi mã nguồn của HEAD luôn trong trạng thái sẵn sàng cho nhóm người dùng cuối sử dụng.
+- origin/develop là nhánh chính nơi bộ mã nguồn của HEAD luôn ở trạng thái phát triển với lần thay đổi cuối cùng và sẵn sàng cho lần xuất bản tiếp theo.
+- Tất cả thay đổi nên được hợp nhất trở lại nhánh main bằng cách nào đó như (Trường hợp nhánh fix hợp nhất vào main nếu chỉ có 1 vài sự thay đổi nhỏ,...), sau đó được dán nhãn với 1 mã số mới - bản phát hành mới.
+
+Các nhánh hỗ trợ
+
+* Nhánh feature
+* Nhánh release
+* Nhánh hotfix
+
+I.Nhánh feature
+
+- Đặc điểm:
+* có thể phân nhánh từ develop
+* Phải được hợp nhất trở lại develop
+* Quy tắc đặt tên: feature/*
+vd: feature/ui-login, feature/api-login,...
+
+DEMO:
+
+- example: "Creating a feature branch"
+
+```
+$ git checkout -b feature/myfeature develop
+Switched to a new branch "feature/myfeature"
+```
+
+- example: "Incorporating a finished feature on develop"
+
+```
+$ git checkout develop
+Switched to branch 'develop'
+$ git merge --no-ff myfeature
+Updating ea1b82a..05e9557
+(Summary of changes)
+$ git branch -d myfeature
+Deleted branch myfeature (was 05e9557).
+$ git push origin develop
+```
+
+II.Nhánh release
+
+- Đặc điểm
+*Có thể phân nhánh từ develop
+*Phải được hợp nhất trở lại nhánh develop và main
+*Quy tắc đặt tên: "release/*"
+
+Ví dụ: release/1.0.1
+
+DEMO: "Creating a release branch"
+
+```
+$ git checkout -b release-1.2 develop
+Switched to a new branch "release-1.2"
+$ ./bump-version.sh 1.2
+Files modified successfully, version bumped to 1.2.
+$ git commit -a -m "Bumped version number to 1.2"
+[release-1.2 74d9424] Bumped version number to 1.2
+1 files changed, 1 insertions(+), 1 deletions(-)
+```
+
+- example: "Finishing a release branch"
+
+```
+$ git checkout main
+Switched to branch 'main'
+$ git merge --no-ff release-1.2
+Merge made by recursive.
+(Summary of changes)
+$ git tag -a 1.2
+```
+
+- Lưu ý:
+* Để giữ các thay đổi đã làm trong nhánh release, ta cần hợp nhất trở lại nhánh develop
+
+DEMO:
+
+```
+$ git checkout develop
+Switched to branch 'develop'
+$ git merge --no-ff release-1.2
+Merge made by recursive.
+(Summary of changes)
+```
+
+- Lưu ý: "Nếu ta không còn cần nhánh release đó nữa"
+
+```
+$ git branch -d release-1.2
+Deleted branch release-1.2 (was ff452fe).
+```
+
+
+III.Nhánh hotfix
+
+- Đặc điểm
+* Có thể phân nhánh từ main
+* Phải được hợp nhất trở lại: develop và main
+* Quy tắc đặt tên: hotfix/*id_release
+Ví dụ: hotfix/1.0.1
+
+- Lưu ý:
+Khi một bug nghiêm trọng trong 1 phiên bản nào đó phải được giải quyết ngay lập tức, 1 nhánh hotfix cớ thể được phân nhánh từ thẻ tương ứng trên nhánh chính đánh dấu phiên bản xuất bản.
+
+DEMO: "Creating the hotfix branch"
+
+```
+$ git checkout -b hotfix-1.2.1 master
+Switched to a new branch "hotfix-1.2.1"
+$ ./bump-version.sh 1.2.1
+Files modified successfully, version bumped to 1.2.1.
+$ git commit -a -m "Bumped version number to 1.2.1"
+[hotfix-1.2.1 41e61bb] Bumped version number to 1.2.1
+1 files changed, 1 insertions(+), 1 deletions(-)
+```
+
+- example: "after fix the bug and commit the fix in one or more separate commits"
+
+```
+$ git commit -m "Fixed severe production problem"
+[hotfix-1.2.1 abbe5d6] Fixed severe production problem
+5 files changed, 32 insertions(+), 17 deletions(-)
+```
+
+- example: "Finishing a hotfix branch"
+
+```
+$ git checkout master
+Switched to branch 'master'
+$ git merge --no-ff hotfix-1.2.1
+Merge made by recursive.
+(Summary of changes)
+$ git tag -a 1.2.1
+$ git checkout develop
+Switched to branch 'develop'
+$ git merge --no-ff hotfix-1.2.1
+Merge made by recursive.
+(Summary of changes)
+```
+
+Lưu ý: 
+* 1 ngoại lệ cho quy tắc ở đây là, khi tồn tại một nhánh release hiện tại, các thay đổi ở nhánh hotfix đó cần được hợp nhất vào nhánh phát hành đó thay vì nhánh phát triển. Việc hợp nhất ngược bản vá lỗi vào nhánh release cuối cùng sẽ dẫn đến việc bản vá lỗi cũng được hợp nhất vào nhánh develop khi nhánh release được kết thúc.
+** Nếu công việc phát triển ngay lập tức yêu cầu sửa lỗi này và không thể chờ đợi nhánh phát triển hoàn tất, bạn cũng có thể hợp nhất bản vá lỗi vào nhánh develop ngay lập tức 1 cách an toàn.
+
+DEMO:
+
+- example: "remove the temporary branch if you want"
+
+```
+$ git branch -d hotfix-1.2.1
+Deleted branch hotfix-1.2.1 (was abbe5d6).
+

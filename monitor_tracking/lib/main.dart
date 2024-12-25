@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 import 'package:monitor_tracking/features/auth/login/presentation/login_screen.dart';
 import 'package:monitor_tracking/features/auth/register/presentation/register_screen.dart';
 import 'package:monitor_tracking/features/feed/app.dart';
 import 'package:monitor_tracking/features/launch/app.dart';
+
 import 'firebase_options.dart';
 
 import '__mock__/data.dart' as data;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await dotenv.load(fileName: ".env"); 
+  } catch (e) {
+    throw Exception('Error loading .env file: $e');
+  }
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -46,7 +54,6 @@ class TrackingApp extends StatelessWidget {
       // home: const MyHomePage(title: 'Flutter Tracking'),
 
       theme: ThemeData.light(useMaterial3: true),
-      // home: Feed(currentUser: data.user_0),
       initialRoute: '/',
       routes: {
         '/': (context) => const FirstScreen(),
@@ -57,4 +64,3 @@ class TrackingApp extends StatelessWidget {
     );
   }
 }
-

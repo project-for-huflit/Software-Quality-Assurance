@@ -11,7 +11,7 @@ class RegisterScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min, 
+          mainAxisSize: MainAxisSize.min,
           children: [
             ElevatedButton(
               // Within the RegisterScreen widget
@@ -21,7 +21,7 @@ class RegisterScreen extends StatelessWidget {
               },
               child: const Text('Register!'),
             ),
-            const SizedBox(height: 16), 
+            const SizedBox(height: 16),
             const Text(
               'Welcome! Please register in to access your feed.',
               style: TextStyle(fontSize: 16, color: Colors.black54),
