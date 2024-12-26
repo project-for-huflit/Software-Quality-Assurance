@@ -1,4 +1,5 @@
 {
     "cmake.sourceDirectory": "D:/Github/Software-Quality-Assurance/monitor_tracking/windows/flutter",
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
