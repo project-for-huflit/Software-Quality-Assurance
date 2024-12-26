@@ -64,7 +64,6 @@ dependencies:
   hypersnapsdk_flutter: ^4.25.0
   json_theme: ^7.0.0+1
   hydrated_bloc: ^9.1.5
-  sentry_flutter: ^8.11.2
   dynamic_color: ^1.7.0
   firebase_core: ^3.9.0
   flutter_dotenv: ^5.2.1
