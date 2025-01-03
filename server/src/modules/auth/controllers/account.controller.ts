@@ -1,93 +1,135 @@
-import { Body, Post, Controller } from '@nestjs/common';
-import { AuthService } from '../services';
-import { RegisterDTO } from '../dtos/register.dto';
+import {
+	Body,
+	Controller,
+	FileTypeValidator,
+	Get,
+	MaxFileSizeValidator,
+	NotFoundException,
+	Param,
+	ParseBoolPipe,
+	ParseFilePipe,
+	Patch,
+	Post,
+	Query,
+	UploadedFile,
+	UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+
+import {
+	IMG_MAX_1MB_SIZE_IN_BYTE,
+	listPngAndJpegImageExt,
+} from '@/common/constants';
 import { CREATED, SuccessResponse } from '@/common/core';
-import { IRequest } from '@/common/interfaces/Requests';
+import { getFileTypesRegexp } from '@/common/utils';
+import { storage } from '@/common/utils/multer';
+
+import { LoginDTO, LogoutDTO, RefreshTokenDTO, RegisterDTO } from '../dtos';
+import { AccountRequestBody } from '../dtos/request';
+import { AccountDocument } from '../entities';
+import { AccountService, AuthService } from '../services';
 
 @Controller('auth')
 export class AuthController {
+	constructor(private readonly authService: AuthService) {}
 	//region JWT
 	@Post()
 	async register(@Body() body: RegisterDTO) {
-		const result = await AuthService.register(body);
+		const result = await this.authService.register(body);
 		new CREATED({
 			message: 'Register OK!',
 			metadata: result,
-			option: {},
 		});
 	}
-
-	login = async ({ req, res }: IRequest) => {
+	@Post()
+	async login(@Body() body: LoginDTO) {
 		new SuccessResponse({
-			metadata: await AuthService.login(req.body),
-		}).send(res);
-	};
+			metadata: await this.authService.login(body),
+		});
+	}
+	@Post()
+	async logout(@Body() body: LogoutDTO) {
+		new SuccessResponse({
+			message: 'Logout success!',
+			metadata: await this.authService.logout(body),
+		});
+	}
+	@Get()
+	async handlerRefreshTokenUser(@Body() body: RefreshTokenDTO) {
+		const { refreshToken, user, keyStore } = body;
+		new SuccessResponse({
+			message: 'Get token success!',
+			metadata: await this.authService.handleRefreshToken({
+				refreshToken: refreshToken,
+				user: user,
+				keyStore: keyStore,
+			}),
+		});
+	}
+}
 
-	// logout = async ({req, res} : IRequest) => {
-	//   const { keyStore } = req;
-	//   new SuccessResponse({
-	//     message: 'Logout success!',
-	//     metadata: await AuthService.logout(keyStore),
-	//   }).send(res);
-	// };
-	// handlerRefreshTokenUser = async ({req, res} : IRequest) => {
-	//   const {
-	//     refreshToken,
-	//     user,
-	//     keyStore
-	//   } = req;
-	//   new SuccessResponse({
-	//     message: 'Get token success!',
-	//     metadata: await AuthService.handleRefreshToken({
-	//       refreshToken: refreshToken,
-	//       user: user,
-	//       keyStore: keyStore,
-	//     }),
-	//   }).send(res);
-	// };
-	// region POINTER SERVICE
+@Controller('account')
+export class AccountController {
+	constructor(private readonly accountService: AccountService) {}
 
-	// loginPartner = async ({req, res} : IRequest) => {
-	//   new SuccessResponse({
-	//     metadata: await SSOService.login(req.body),
-	//   }).send(res);
-	// };
-	// loginPointer = async ({req, res} : IRequest) => {
-	//   new SuccessResponse({
-	//     message: ' success!',
-	//     metadata: await SSOService.loginWithPointer(req.body),
-	//   }).send(res);
-	// };
+	@Get('/')
+	async getList(
+		@Query('isPublished', ParseBoolPipe) isPublished?: boolean,
+	): Promise<AccountDocument[]> {
+		const response = await this.accountService.getList({ isPublished });
 
-	// logoutPointer = async ({req, res} : IRequest) => {
-	//   const { keyStore } = req;
-	//   new SuccessResponse({
-	//     message: 'Logout with partner success!',
-	//     metadata: await SSOService.logout(keyStore),
-	//   }).send(res);
-	// };
+		if (!response?.length) {
+			throw new NotFoundException('Accounts are not exist');
+		}
 
-	// registerPointer = async ({req, res} : IRequest) => {
-	//   new CREATED({
-	//     message: 'Register with pointer OK!',
-	//     metadata: await SSOService.register(req.body),
-	//     option: {}
-	//   }).send(res);
-	// };
+		return response;
+	}
 
-	// handlerRefreshTokenPointer = async ({req, res} : IRequest) => {
-	//     const {
-	//       refreshToken,
-	//       user,
-	//       keyStore
-	//     } = req;
-	//   new SuccessResponse({
-	//     message: 'Get token success!',
-	//     metadata: await SSOService.handleRefreshToken({
-	//       refreshToken: refreshToken,
-	//       user: user,
-	//       keyStore: keyStore,
-	//     }),
-	//   }).send(res);
-	// };
+	@Get('/:id')
+	async get(@Param('id') id: string): Promise<AccountDocument> {
+		const response = await this.accountService.getItem(id);
+
+		if (!response) {
+			throw new NotFoundException('Account does not exist');
+		}
+
+		return response;
+	}
+
+	@Post('/')
+	async create(@Body() body: AccountRequestBody): Promise<AccountDocument> {
+		return this.accountService.create(body);
+	}
+
+	@Patch('/:id')
+	async update(
+		@Param('id') id: string,
+		@Body() body: AccountRequestBody,
+	): Promise<AccountDocument> {
+		return this.accountService.update(id, body);
+	}
+
+	@Patch('/publish/:id')
+	async togglePublish(@Param('id') id: string): Promise<AccountDocument> {
+		return this.accountService.togglePublish(id);
+	}
+
+	@Post('/:id/image')
+	@UseInterceptors(FileInterceptor('file', { storage, limits: { files: 1 } }))
+	async updateAccountImage(
+		@UploadedFile(
+			new ParseFilePipe({
+				validators: [
+					new MaxFileSizeValidator({ maxSize: IMG_MAX_1MB_SIZE_IN_BYTE }),
+					new FileTypeValidator({
+						fileType: getFileTypesRegexp(listPngAndJpegImageExt),
+					}),
+				],
+			}),
+		)
+		file: Express.Multer.File,
+		@Param('id') id: string,
+	): Promise<AccountDocument> {
+		return this.accountService.updateImage(id, file);
+	}
 }

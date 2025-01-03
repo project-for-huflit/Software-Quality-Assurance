@@ -1,7 +1,13 @@
-import { IHandleRefreshToken, ILogin, ILogout, IRegister } from '../interfaces/auth.interface';
+// import { LogoutDTO } from '../dtos/logout.dto';
+import {
+	IHandleRefreshToken,
+	ILogin,
+	ILogout,
+	IRegister,
+} from '../interfaces/auth.interface';
 
 export class AuthService {
-	static handleRefreshToken = async ({
+	public handleRefreshToken = async ({
 		keyStore,
 		user,
 		refreshToken,
@@ -33,8 +39,9 @@ export class AuthService {
 		// 	},
 		// });
 		// return { user, tokens };
+		return {};
 	};
-	static register = async ({ name, email, phone, password }: IRegister) => {
+	public register = async ({ name, email, phone, password }: IRegister) => {
 		// try {
 		// 	const modelUser = await Account.findOne({ email }).lean();
 		// 	if (modelUser)
@@ -98,7 +105,7 @@ export class AuthService {
 		// }
 		return {};
 	};
-	static login = async ({ email, password, refreshToken = null }: ILogin) => {
+	public login = async ({ email, password, refreshToken = null }: ILogin) => {
 		// const foundUser = await UserService.findByEmail({ email });
 		// if (!foundUser) throw new BadRequestError('User not registered!');
 		// const match = bcrypt.compare(password, foundUser.password);
@@ -135,9 +142,10 @@ export class AuthService {
 		// };
 		return {};
 	};
-	static logout = async (keyStore: ILogout) => {
+	public logout = async ({ keyStore }: ILogout) => {
 		// const delKey = await KeyTokenService.removeKeyById(keyStore._id);
 		// console.log({ delKey });
 		// return delKey;
+		return { keyStore: keyStore };
 	};
 }

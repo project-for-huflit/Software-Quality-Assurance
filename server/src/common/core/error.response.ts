@@ -1,7 +1,7 @@
 'use strict';
 
-import { StatusCodes, ReasonPhrases } from '../utils/httpStatusCode';
 import { IErrorResponse } from '../interfaces/ICores';
+import { ReasonPhrases, StatusCodes } from '../utils/httpStatusCode';
 
 const StatusCode = {
 	FORBIDEN: 403,
@@ -68,9 +68,9 @@ class ForbidenError extends ErrorResponse {
 }
 
 export {
-	ConflictRequestError,
-	BadRequestError,
 	AuthFailureError,
-	NotFoundError,
+	BadRequestError,
+	ConflictRequestError,
 	ForbidenError,
+	NotFoundError,
 };

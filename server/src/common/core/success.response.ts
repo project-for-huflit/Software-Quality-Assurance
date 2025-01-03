@@ -1,8 +1,9 @@
 'use strict';
 
 import { Response } from 'express';
-import { StatusCodes, ReasonPhrases } from '../utils/httpStatusCode';
+
 import { ICreated, IOK, ISuccessResponse } from '../interfaces';
+import { ReasonPhrases, StatusCodes } from '../utils/httpStatusCode';
 
 class SuccessResponse {
 	message: string;
@@ -31,7 +32,7 @@ class OK extends SuccessResponse {
 }
 
 class CREATED extends SuccessResponse {
-	option: object;
+	option?: object;
 
 	constructor({
 		message,
@@ -45,4 +46,4 @@ class CREATED extends SuccessResponse {
 	}
 }
 
-export { OK, CREATED, SuccessResponse };
+export { CREATED, OK, SuccessResponse };

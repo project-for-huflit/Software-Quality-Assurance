@@ -1,4 +1,5 @@
 import * as Joi from 'joi';
+
 import { _DEV, _PROD, _STAGING, _TEST } from '../constants';
 
 export const envSchema = Joi.object({

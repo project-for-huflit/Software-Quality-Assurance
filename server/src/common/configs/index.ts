@@ -1,2 +1,2 @@
-export * from './swagger';
 export * from './firebase';
+export * from './swagger';

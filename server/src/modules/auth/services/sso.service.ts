@@ -226,7 +226,6 @@ export class SSOService {
 	// 	// 	};
 	// 	// }
 	// }
-
 	// static logout = async (keyStore: string) => {
 	// 	// const delKey = await KeyTokenService.removeKeyById(keyStore._id);
 	// 	// console.log({ delKey });

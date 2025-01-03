@@ -11,6 +11,7 @@ export class FirestoreService {
 
 	async getCollection(collection: string) {
 		const snapshot = await this.firestore.collection(collection).get();
+
 		return snapshot.docs.map((doc) => doc.data());
 	}
 }
