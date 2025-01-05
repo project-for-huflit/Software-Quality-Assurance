@@ -4,6 +4,6 @@ import { _PORT } from '../venv';
 
 export const corsOptions: CorsOptions = {
 	origin: [`http://localhost:${_PORT}`],
-	methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+	methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
 	credentials: true,
 };

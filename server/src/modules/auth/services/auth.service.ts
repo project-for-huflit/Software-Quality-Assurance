@@ -97,11 +97,17 @@ export class AuthService {
 		// 		metadata: null,
 		// 	};
 		// } catch (error) {
+		// OPTION 1:
 		// 	return {
 		// 		code: 'xxx',
 		// 		message: error.message,
 		// 		status: 'error',
 		// 	};
+		// OPTION 2:
+		// throw new BadRequestException({
+		//   	message: ERRORS_DICTIONARY.WRONG_CREDENTIALS,
+		//      details: 'Wrong credentials!!',
+		//   });
 		// }
 		return {};
 	};
