@@ -156,4 +156,11 @@ DEMO:
 ```
 $ git branch -d hotfix-1.2.1
 Deleted branch hotfix-1.2.1 (was abbe5d6).
+```
+
+IV. Quy tắc commit
+
+- "#<number_issue> - <name> <do_somebody/something>"
+
+Ví dụ: "#1 - Trung add login ui"
 
