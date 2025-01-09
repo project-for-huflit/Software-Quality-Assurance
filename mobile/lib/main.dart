@@ -59,7 +59,7 @@ class TrackingApp extends StatelessWidget {
         '/': (context) => const FirstScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
-        '/feed': (context) => Feed(currentUser: data.user_0),
+        '/feed': (context) => Feed (currentUser: data.user_0),
       },
     );
   }
