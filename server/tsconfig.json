@@ -11,7 +11,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./src/*"],
     },
     "incremental": true,
     "skipLibCheck": true,
@@ -20,5 +20,11 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
-  }
+  },
+  "compileOnSave": true,
+  "include": [
+    "src",
+    "test",
+  ],
+  "exclude": ["node_modules"]
 }
