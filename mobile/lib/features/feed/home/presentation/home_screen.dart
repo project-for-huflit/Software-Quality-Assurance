@@ -4,6 +4,7 @@ import 'package:mobile/features/feed/home/widgets/bottom_nav_bar.dart';
 import 'package:mobile/features/feed/home/widgets/top_expense.dart';
 import 'package:mobile/features/feed/home/widgets/total_balance.dart';
 import 'package:mobile/features/feed/home/widgets/overview_report.dart';
+import 'package:mobile/features/feed/home/widgets/transaction_row.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height * 1.5, // Đảm bảo Stack đủ lớn để cuộn
+          height: MediaQuery.of(context).size.height * 2, // Đảm bảo Stack đủ lớn để cuộn
           child: Stack(
             children: [
               AppBarWidget(),
@@ -42,6 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 right: 20,
                 child: TopExpense(),
               ),
+              Positioned(
+                  child: Text("Transactions",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  top: 920, left: 20),
+              Positioned(
+                top: 950, left: 20, right: 20,
+                child: Column(
+                  children: List.generate(4, (index) => const TransactionRow()),
+                ), ),
             ],
           ),
         ),
