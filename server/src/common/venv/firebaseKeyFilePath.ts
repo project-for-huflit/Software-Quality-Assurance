@@ -1,1 +1,1 @@
-export const firebaseKeyFilePath = process.env.FIREBASE_KEY_FILE_PATH ?? '';
+export const firebaseKeyFilePath = './tracking-expense-79899-firebase-adminsdk-3m2hf-02c3a12c1e.json';

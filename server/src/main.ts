@@ -7,6 +7,8 @@ import { setupFirebase, setupSwagger } from '@/common/configs';
 import { corsOptions } from '@/common/constants';
 import { _PORT, firebaseKeyFilePath } from '@/common/venv';
 
+declare const module: any;
+
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
@@ -22,5 +24,10 @@ async function bootstrap() {
 
 	await app.listen(_PORT);
 	console.log('Server start at port:: ', await app.getUrl()) ;
+
+	if (module.hot) {
+		module.hot.accept();
+		module.hot.dispose(() => app.close());
+	}
 }
 bootstrap();
