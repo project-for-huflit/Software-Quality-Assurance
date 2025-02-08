@@ -5,6 +5,7 @@ import {
 	RequestMethod,
 	ValidationPipe,
 } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -12,18 +13,17 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { GlobalExceptionFilter } from '@/common/filters';
 import { LoggerMiddleware } from '@/common/middlewares';
 import { envSchema } from '@/common/venv';
-// import { DatabaseModule } from '@/db/database.module';
 import { getEnvFile } from '@/global/env';
-// import { BucketModule } from '@/provider/bucket';
-// import { AuthModule } from '@/modules/auth';
 import { FirestoreModule } from '@/provider/firestore';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CombinedGuard } from './common/guards';
 
 @Module({
 	imports: [
+		CacheModule.register({
+			isGlobal: true
+		}),
 		ConfigModule.forRoot({
 			envFilePath: getEnvFile(),
 			validationSchema: envSchema,
@@ -50,14 +50,14 @@ import { CombinedGuard } from './common/guards';
 		// }),
 		ThrottlerModule.forRoot([
 			{
-				name: 'submit',
+				name: 'click',
 				ttl: 1000,
 				limit: 3,
 			},
 			{
-				name: 'long',
-				ttl: 60000,
-				limit: 100,
+				name: 'submit',
+				ttl: 1000,
+				limit: 1,
 			},
 		]),
 		// DatabaseModule,
@@ -74,10 +74,10 @@ import { CombinedGuard } from './common/guards';
 			provide: APP_PIPE,
 			useClass: ValidationPipe,
 		},
-		{
-			provide: APP_GUARD,
-			useClass: CombinedGuard,
-		},
+		// {
+		// 	provide: APP_GUARD,
+		// 	useClass: CombinedGuard,
+		// },
 	],
 	exports: [],
 })
