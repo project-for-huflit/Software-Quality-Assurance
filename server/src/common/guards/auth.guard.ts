@@ -11,3 +11,7 @@ export class AuthGuard implements CanActivate {
 		return validateRequest(request);
 	}
 }
+
+function validateRequest(request: any): boolean | Promise<boolean> | Observable<boolean> {
+	throw new Error('Function not implemented.');
+}
