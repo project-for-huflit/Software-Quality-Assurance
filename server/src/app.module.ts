@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 
 import { GlobalExceptionFilter } from '@/common/filters';
@@ -15,6 +15,8 @@ import { LoggerMiddleware } from '@/common/middlewares';
 import { envSchema } from '@/common/venv';
 import { getEnvFile } from '@/global/env';
 import { FirestoreModule } from '@/provider/firestore';
+
+import { WalletModule, NotificationModule } from '@/modules';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -62,6 +64,8 @@ import { AppService } from './app.service';
 		]),
 		// DatabaseModule,
 		// AuthModule,
+		NotificationModule,
+		WalletModule
 	],
 	controllers: [AppController],
 	providers: [
