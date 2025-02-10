@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:mobile/features/feed/home/widgets/bar_view.dart';
+
+import 'bar_view.dart';
 
 class OverViewReport extends StatefulWidget {
   const OverViewReport({super.key});

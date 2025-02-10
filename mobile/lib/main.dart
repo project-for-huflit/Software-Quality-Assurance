@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mobile/features/feed/home/presentation/home_screen.dart';
-
 import '/features/auth/login/presentation/login_screen.dart';
 import '/features/auth/register/presentation/register_screen.dart';
-import '/features/feed/app.dart';
 import '/features/launch/app.dart';
 
+import 'features/home/presentation/home_screen.dart';
 import 'firebase_options.dart';
 
 import '__mock__/data.dart' as data;
@@ -61,7 +59,7 @@ class TrackingApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         // '/feed': (context) => Feed (currentUser: data.user_0),
-        '/feed': (context) => const HomeScreen(),
+        '/home': (context) => const HomeScreen(),
       },
     );
   }

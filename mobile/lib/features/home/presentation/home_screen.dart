@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/features/feed/home/widgets/app_bar.dart';
-import 'package:mobile/features/feed/home/widgets/bottom_nav_bar.dart';
-import 'package:mobile/features/feed/home/widgets/top_expense.dart';
-import 'package:mobile/features/feed/home/widgets/total_balance.dart';
-import 'package:mobile/features/feed/home/widgets/overview_report.dart';
-import 'package:mobile/features/feed/home/widgets/transaction_row.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/bottom_nav_bar.dart';
+import '../widgets/overview_report.dart';
+import '../widgets/top_expense.dart';
+import '../widgets/total_balance.dart';
+import '../widgets/transaction_row.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

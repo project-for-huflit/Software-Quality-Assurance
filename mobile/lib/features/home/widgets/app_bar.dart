@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/features/feed/home/widgets/bottom_nav_bar.dart';
-import 'package:mobile/features/feed/home/widgets/total_balance.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key});

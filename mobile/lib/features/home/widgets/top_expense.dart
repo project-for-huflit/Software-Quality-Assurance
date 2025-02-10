@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/features/feed/home/widgets/expense_card.dart';
+
+import 'expense_card.dart';
 
 class TopExpense extends StatefulWidget {
   const TopExpense({super.key});
