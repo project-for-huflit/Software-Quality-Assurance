@@ -81,10 +81,10 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
   static final List<Widget> _widgetOptions = <Widget>[
     const Center(
         child: Text(
-      'Index 0: One',
-      style: optionStyle,
-    )),
-    const Text(
+          'Index 0: One',
+          style: optionStyle,
+        )),
+    Text(
       'Index 1: Two',
       style: optionStyle,
     ),

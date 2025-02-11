@@ -18,7 +18,7 @@ import { FirestoreModule } from '@/provider/firestore';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
- 
+
 @Module({
 	imports: [
 		CacheModule.register({
@@ -56,8 +56,8 @@ import { AppService } from './app.service';
 			},
 			{
 				name: 'submit',
-				ttl: 3000,
-				limit: 10,
+        ttl: 1000,
+				limit: 1,
 			},
 		]),
 		// DatabaseModule,
