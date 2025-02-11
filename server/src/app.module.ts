@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 
 import { GlobalExceptionFilter } from '@/common/filters';
@@ -52,11 +52,11 @@ import { AppService } from './app.service';
 			{
 				name: 'click',
 				ttl: 1000,
-				limit: 3,
+				limit: 1,
 			},
 			{
 				name: 'submit',
-				ttl: 1000,
+        ttl: 1000,
 				limit: 1,
 			},
 		]),

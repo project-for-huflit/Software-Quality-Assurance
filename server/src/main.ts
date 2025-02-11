@@ -23,7 +23,7 @@ async function bootstrap() {
 	setupFirebase(firebaseKeyFilePath);
 
 	await app.listen(_PORT);
-	console.log('Server start at port:: ', await app.getUrl());
+  console.log('Server start at port:: ', await app.getUrl());
 
 	if (module.hot) {
 		module.hot.accept();
