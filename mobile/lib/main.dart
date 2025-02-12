@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mobile/features/feed/home/presentation/home_screen.dart';
 
 import '/features/auth/login/presentation/login_screen.dart';
 import '/features/auth/register/presentation/register_screen.dart';
 import '/features/feed/app.dart';
 import '/features/launch/app.dart';
 
+import 'features/wallet/screens/createWallet/app.dart';
 import 'firebase_options.dart';
 
 import '__mock__/data.dart' as data;
@@ -51,7 +53,6 @@ class TrackingApp extends StatelessWidget {
       //   colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 104, 35, 222)),
       //   useMaterial3: true,
       // ),
-      // home: const MyHomePage(title: 'Flutter Tracking'),
 
       theme: ThemeData.light(useMaterial3: true),
       initialRoute: '/',
@@ -59,7 +60,10 @@ class TrackingApp extends StatelessWidget {
         '/': (context) => const FirstScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
-        '/feed': (context) => Feed(currentUser: data.user_0),
+//         '/feed': (context) => Feed (currentUser: data.user_0),
+        '/wallet/create': (context) => const CreateWalletScreen()
+           // '/feed': (context) => Feed (currentUser: data.user_0),
+        '/feed': (context) => const HomeScreen(),
       },
     );
   }

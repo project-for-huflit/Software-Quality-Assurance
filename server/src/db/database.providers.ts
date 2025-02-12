@@ -1,3 +1,1 @@
-export const databaseProviders = [
-  
-];
+export const databaseProviders = [];
