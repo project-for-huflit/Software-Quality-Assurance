@@ -15,14 +15,12 @@ class LoginScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ElevatedButton(
-              // Within the LoginScreen widget
               onPressed: () {
-                // Navigate to the feed screen
-                Navigator.pushNamed(context, '/feed');
+                Navigator.pushNamed(context, '/home');
               },
               child: const Text('Login!'),
             ),
-            const SizedBox(height: 16), // Khoảng cách giữa nút và đoạn text
+            const SizedBox(height: 16), 
             const Text(
               'Welcome! Please log in to access your feed.',
               style: TextStyle(fontSize: 16, color: Colors.black54),
@@ -41,7 +39,6 @@ class LoginScreen extends StatelessWidget {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        // Điều hướng đến màn hình đăng ký
                         Navigator.pushNamed(context, '/register');
                       },
                   ),

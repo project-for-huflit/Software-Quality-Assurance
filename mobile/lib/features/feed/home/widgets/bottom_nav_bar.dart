@@ -32,14 +32,14 @@ class BottomNavBarWidget extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.pie_chart_outline, color: Colors.blueAccent), // Biểu tượng màu xanh dương
+                icon: const Icon(Icons.pie_chart_outline, color: Colors.blueAccent), 
                 iconSize: 32,
               ),
             ],
           ),
           Container(
             decoration: const BoxDecoration(
-              color: Colors.orangeAccent, // Nút chính màu cam thu hút
+              color: Colors.orangeAccent, 
               shape: BoxShape.circle,
             ),
             padding: const EdgeInsets.all(20),
@@ -47,7 +47,7 @@ class BottomNavBarWidget extends StatelessWidget {
               '+',
               style: TextStyle(
                 fontSize: 30,
-                color: Colors.white, // Chữ "+" màu trắng để tương phản
+                color: Colors.white, 
                 height: 1,
               ),
             ),
@@ -57,12 +57,12 @@ class BottomNavBarWidget extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.wallet_outlined, color: Colors.blueAccent), // Biểu tượng màu xanh dương
+                icon: const Icon(Icons.wallet_outlined, color: Colors.blueAccent),
                 iconSize: 32,
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.person_outline, color: Colors.blueAccent), // Biểu tượng màu xanh dương
+                icon: const Icon(Icons.person_outline, color: Colors.blueAccent),
                 iconSize: 32,
               ),
             ],

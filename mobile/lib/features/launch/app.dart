@@ -15,7 +15,7 @@ class FirstScreen extends StatelessWidget {
           onPressed: () {
             // Navigate back to the first screen by popping the current route
             // off the stack.
-            Navigator.pushNamed(context, '/login');
+            Navigator.pushNamed(context, '/home');
           },
           child: const Text('Launch!'),
         ),

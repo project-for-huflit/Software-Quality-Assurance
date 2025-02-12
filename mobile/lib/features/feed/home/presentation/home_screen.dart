@@ -1,6 +1,8 @@
+// import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/features/feed/home/widgets/app_bar.dart';
-import 'package:mobile/features/feed/home/widgets/bottom_nav_bar.dart';
+// import 'package:mobile/features/feed/home/widgets/bottom_nav_bar.dart';
+import 'package:mobile/features/feed/home/widgets/bottom_nav_blur_bar.dart';
 import 'package:mobile/features/feed/home/widgets/top_expense.dart';
 import 'package:mobile/features/feed/home/widgets/total_balance.dart';
 import 'package:mobile/features/feed/home/widgets/overview_report.dart';
@@ -14,39 +16,42 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavBarWidget(),
+      // bottomNavigationBar: const BottomNavBarWidget(),
+      extendBody: true,
+      bottomNavigationBar: const BottomNavBlurBar(),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height * 2, // Đảm bảo Stack đủ lớn để cuộn
           child: Stack(
             children: [
-              AppBarWidget(),
-              Positioned(
+              const AppBarWidget(),
+              const Positioned(
                 top: 140,
                 left: 20,
                 right: 20,
                 child: TotalBalanceWidget(),
               ),
-              Positioned(
+              const Positioned(
                 top: 300,
                 left: 20,
                 right: 20,
                 child: OverViewReport(),
               ),
-              Positioned(
+              const Positioned(
                 top: 680,
                 left: 20,
                 right: 20,
                 child: TopExpense(),
               ),
-              Positioned(
+              const Positioned(
+                  top: 920, left: 20,
                   child: Text("Transactions",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  top: 920, left: 20),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
               Positioned(
                 top: 950, left: 20, right: 20,
                 child: Column(

@@ -8,7 +8,10 @@ import '/features/auth/register/presentation/register_screen.dart';
 import '/features/feed/app.dart';
 import '/features/launch/app.dart';
 
-import 'features/wallet/screens/createWallet/app.dart';
+import 'features/setting/presentation/app.dart';
+import 'features/wallet/presentation/app.dart';
+import 'features/wallet/presentation/createWallet/app.dart';
+import 'features/wallet/presentation/createWallet/app.dart';
 import 'firebase_options.dart';
 
 import '__mock__/data.dart' as data;
@@ -60,10 +63,11 @@ class TrackingApp extends StatelessWidget {
         '/': (context) => const FirstScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
-//         '/feed': (context) => Feed (currentUser: data.user_0),
-        '/wallet/create': (context) => const CreateWalletScreen()
-           // '/feed': (context) => Feed (currentUser: data.user_0),
-        '/feed': (context) => const HomeScreen(),
+        '/raw': (context) => Feed (currentUser: data.user_0),
+        '/home': (context) => const HomeScreen(),
+        '/wallet': (context) => const WalletScreen(),
+        '/wallet/create': (context) => const CreateWalletScreen(),
+        '/setting': (context) => const SettingsScreen(),
       },
     );
   }

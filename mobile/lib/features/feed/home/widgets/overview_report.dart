@@ -49,7 +49,7 @@ class _OverViewReportState extends State<OverViewReport> {
             style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
-          Container(
+          SizedBox(
             height: 180,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

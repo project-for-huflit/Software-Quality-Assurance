@@ -6,8 +6,8 @@ import '/features/app/widgets/customs/animated_floating_action_button.dart';
 import '/features/app/widgets/navigation/disappearing_bottom_navigation_bar.dart';
 import '/features/app/widgets/navigation/disappearing_navigation_rail.dart';
 
-import '../wallet/screens/app.dart';
-import '../setting/screens/app.dart';
+import '../wallet/presentation/app.dart';
+import '../setting/presentation/app.dart';
 
 class Feed extends StatefulWidget {
   const Feed({
@@ -84,7 +84,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
           'Index 0: One',
           style: optionStyle,
         )),
-    Text(
+    const Text(
       'Index 1: Two',
       style: optionStyle,
     ),

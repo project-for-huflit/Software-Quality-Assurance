@@ -28,7 +28,7 @@ class TransactionRow extends StatelessWidget {
               color: Color(0xffFFE5F3),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
-            child: Icon(
+            child: const Icon(
                 Icons.shopping_bag_outlined,
                 color: Colors.blue,
                 size: 25
@@ -37,13 +37,13 @@ class TransactionRow extends StatelessWidget {
 
           const SizedBox(width: 15),
 
-          Expanded(child: Column(
+          const Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 "buying some stuff",
                 maxLines: 1,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -52,7 +52,7 @@ class TransactionRow extends StatelessWidget {
               Text(
                 "6/5/2024 4:20pm",
                 maxLines: 1,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
@@ -63,10 +63,10 @@ class TransactionRow extends StatelessWidget {
 
           const SizedBox(width: 15),
 
-          Text(
+          const Text(
             "- 1,000,000",
             maxLines: 1,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.red,
               fontSize: 18,
               fontWeight: FontWeight.w700,

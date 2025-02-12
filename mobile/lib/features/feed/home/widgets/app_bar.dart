@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/features/feed/home/widgets/bottom_nav_bar.dart';
-import 'package:mobile/features/feed/home/widgets/total_balance.dart';
+// import 'package:mobile/features/feed/home/widgets/bottom_nav_bar.dart';
+// import 'package:mobile/features/feed/home/widgets/total_balance.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key});
@@ -13,7 +13,15 @@ class AppBarWidget extends StatelessWidget {
       ),
       padding: const EdgeInsets.fromLTRB(20,60,20,0),
       decoration: BoxDecoration(
-        color: Colors.blue[600],
+        // color: Colors.blue[600],
+        gradient: const LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Color.fromRGBO(0, 255, 135, 100),
+            Color.fromRGBO(0, 229, 225, 100),
+          ],
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
       alignment: Alignment.centerLeft,
