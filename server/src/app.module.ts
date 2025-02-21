@@ -1,3 +1,4 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import {
 	MiddlewareConsumer,
 	Module,
@@ -5,7 +6,6 @@ import {
 	RequestMethod,
 	ValidationPipe,
 } from '@nestjs/common';
-import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -22,7 +22,7 @@ import { AppService } from './app.service';
 @Module({
 	imports: [
 		CacheModule.register({
-			isGlobal: true
+			isGlobal: true,
 		}),
 		ConfigModule.forRoot({
 			envFilePath: getEnvFile(),
@@ -56,7 +56,7 @@ import { AppService } from './app.service';
 			},
 			{
 				name: 'submit',
-        ttl: 1000,
+				ttl: 1000,
 				limit: 1,
 			},
 		]),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/animations.dart';
-import '/features/app/models/user_model.dart';
+// import '/features/app/models/user_model.dart';
 import '/features/app/widgets/customs/animated_floating_action_button.dart';
 import '/features/app/widgets/navigation/disappearing_bottom_navigation_bar.dart';
 import '/features/app/widgets/navigation/disappearing_navigation_rail.dart';
@@ -12,10 +12,10 @@ import '../setting/presentation/app.dart';
 class Feed extends StatefulWidget {
   const Feed({
     super.key,
-    required this.currentUser,
+    // required this.currentUser,
   });
 
-  final User currentUser;
+  // final User currentUser;
 
   @override
   State<Feed> createState() => _FeedState();

@@ -46,8 +46,14 @@ class FirebaseOptionsMacos {
   final String iosBundleId = dotenv.env['MAXOS_iosBundleId'] ?? '';
 }
 
+class UrlApi {
+  final String urlApi = dotenv.env['FLUTTER_URL_API'] ?? '';
+}
+
 final webConfig = FirebaseOptionsWeb();
 final androidConfig = FirebaseOptionsAndroid();
 final windowsConfig = FirebaseOptionsWindow();
 final iosConfig = FirebaseOptionsIos();
 final macosConfig = FirebaseOptionsMacos();
+
+final urlApiConfig = UrlApi();
