@@ -7,12 +7,12 @@ class ExpenseCard extends StatelessWidget {
   final String percentage;
 
   const ExpenseCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.amount,
     required this.percentage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

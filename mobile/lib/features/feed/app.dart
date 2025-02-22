@@ -6,6 +6,9 @@ import '/features/app/widgets/customs/animated_floating_action_button.dart';
 import '/features/app/widgets/navigation/disappearing_bottom_navigation_bar.dart';
 import '/features/app/widgets/navigation/disappearing_navigation_rail.dart';
 
+import '../wallet/screens/app.dart';
+import '../setting/screens/app.dart';
+
 class Feed extends StatefulWidget {
   const Feed({
     super.key,
@@ -75,8 +78,8 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     fontWeight: FontWeight.bold,
   );
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Center(
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Center(
         child: Text(
           'Index 0: One',
           style: optionStyle,
@@ -85,14 +88,8 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
       'Index 1: Two',
       style: optionStyle,
     ),
-    Text(
-      'Index 2: Three',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 4: Four',
-      style: optionStyle,
-    ),
+    const WalletScreen(),
+    const SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -120,25 +117,15 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
                   });
                 },
               ),
-              _widgetOptions.elementAt(selectedIndex),
-              // Expanded(
-              //   child: Container(
-              //     color: _backgroundColor,
-              //     child: ListDetailTransition(
-              //       animation: _railAnimation,
-              //       one: EmailListView(
-              //         selectedIndex: selectedIndex,
-              //         onSelected: (index) {
-              //           setState(() {
-              //             selectedIndex = index;
-              //           });
-              //         },
-              //         currentUser: widget.currentUser,
-              //       ),
-              //       two: const ReplyListView(),
-              //     ),
-              //   ),
-              // ),
+              Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 40.0),  // Add padding from the top
+                child: Align(
+                  alignment: Alignment.topCenter,  
+                  child: _widgetOptions.elementAt(selectedIndex),
+                ),
+              ),
+            ),
             ],
           ),
           floatingActionButton: AnimatedFloatingActionButton(

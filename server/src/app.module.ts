@@ -54,11 +54,11 @@ import { AppService } from './app.service';
 			{
 				name: 'click',
 				ttl: 1000,
-				limit: 3,
+				limit: 1,
 			},
 			{
 				name: 'submit',
-				ttl: 1000,
+        ttl: 1000,
 				limit: 1,
 			},
 		]),
