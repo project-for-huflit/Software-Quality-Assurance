@@ -12,7 +12,6 @@ module.exports = {
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    'google'
   ],
   root: true,
   env: {
@@ -44,5 +43,11 @@ module.exports = {
     ],
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
+    "prettier/prettier": [
+    "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   },
 };

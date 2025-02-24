@@ -5,7 +5,7 @@ import {
 	BucketProvider,
 	BucketSharedService,
 	DefaultBucketProvider,
-} from '@/provider/bucket';
+} from '@/providers/bucket';
 
 import { AccountFilter } from '../dtos';
 import { AccountRequestBody } from '../dtos/request';

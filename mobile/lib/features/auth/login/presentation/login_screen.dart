@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
               // Within the LoginScreen widget
               onPressed: () {
                 // Navigate to the feed screen
-                Navigator.pushNamed(context, '/feed');
+                Navigator.pushNamed(context, '/home');
               },
               child: const Text('Login!'),
             ),
