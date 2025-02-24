@@ -17,9 +17,11 @@ import { getEnvFile } from '@/global/env';
 import { FirestoreModule } from '@/providers/firestore';
 
 import { 
-	WalletModule, 
+	WalletModule,
+	InvoiceModule,
+	IncomeModule,
 	NotificationModule, 
-	FileManagementModule 
+	FileManagementModule
 } from '@/modules';
 
 import { AppController } from './app.controller';
@@ -69,6 +71,8 @@ import { AppService } from './app.service';
 		]),
 		NotificationModule,
 		WalletModule,
+		InvoiceModule,
+		IncomeModule,
 		FileManagementModule
 	],
 	controllers: [AppController],
