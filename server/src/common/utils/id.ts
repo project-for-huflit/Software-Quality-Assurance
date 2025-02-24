@@ -1,5 +1,3 @@
-import { v4 } from 'uuid';
+import { v7 as uuidv7 } from 'uuid';
 
-const getUniqueId = (): string => v4();
-
-export { getUniqueId };
+export const getUniqueId = (): string => uuidv7(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
