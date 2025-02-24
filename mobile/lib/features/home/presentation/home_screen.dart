@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/features/feed/home/widgets/app_bar.dart';
-import 'package:mobile/features/feed/home/widgets/bottom_nav_bar.dart';
-import 'package:mobile/features/feed/home/widgets/top_expense.dart';
-import 'package:mobile/features/feed/home/widgets/total_balance.dart';
-import 'package:mobile/features/feed/home/widgets/overview_report.dart';
-import 'package:mobile/features/feed/home/widgets/transaction_row.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/bottom_nav_bar.dart';
+import '../widgets/overview_report.dart';
+import '../widgets/top_expense.dart';
+import '../widgets/total_balance.dart';
+import '../widgets/transaction_row.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,36 +17,37 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavBarWidget(),
+      bottomNavigationBar: const BottomNavBarWidget(),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Container(
+        physics: const ClampingScrollPhysics(),
+        child: SizedBox(
           height: MediaQuery.of(context).size.height * 2, // Đảm bảo Stack đủ lớn để cuộn
           child: Stack(
             children: [
-              AppBarWidget(),
-              Positioned(
+              const AppBarWidget(),
+              const Positioned(
                 top: 140,
                 left: 20,
                 right: 20,
                 child: TotalBalanceWidget(),
               ),
-              Positioned(
+              const Positioned(
                 top: 300,
                 left: 20,
                 right: 20,
                 child: OverViewReport(),
               ),
-              Positioned(
+              const Positioned(
                 top: 680,
                 left: 20,
                 right: 20,
                 child: TopExpense(),
               ),
-              Positioned(
+              const Positioned(
+                  top: 920, left: 20,
                   child: Text("Transactions",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  top: 920, left: 20),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
               Positioned(
                 top: 950, left: 20, right: 20,
                 child: Column(

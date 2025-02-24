@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/features/transaction/presentation/transaction.dart';
 
 class BottomNavBarWidget extends StatelessWidget {
   const BottomNavBarWidget({super.key});
@@ -9,7 +11,7 @@ class BottomNavBarWidget extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(128, 255, 255, 255), // 128 là độ trong suốt (50%)
+        color: const Color.fromARGB(128, 255, 255, 255),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -27,28 +29,48 @@ class BottomNavBarWidget extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.home_outlined, color: Colors.blueAccent), // Biểu tượng màu xanh dương
+                icon: const Icon(Icons.home_outlined, color: Colors.blueAccent),
                 iconSize: 32,
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.pie_chart_outline, color: Colors.blueAccent), // Biểu tượng màu xanh dương
+                icon: const Icon(Icons.pie_chart_outline, color: Colors.blueAccent),
                 iconSize: 32,
               ),
             ],
           ),
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.orangeAccent, // Nút chính màu cam thu hút
-              shape: BoxShape.circle,
-            ),
-            padding: const EdgeInsets.all(20),
-            child: const Text(
-              '+',
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.white, // Chữ "+" màu trắng để tương phản
-                height: 1,
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              customBorder: CircleBorder(),
+              splashColor: Colors.orange.withOpacity(0.4),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => const Transaction()),
+                );
+              },
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.orangeAccent,
+                  shape: BoxShape.circle,
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.orangeAccent,
+                  //     blurRadius: 10,
+                  //     spreadRadius: 2,
+                  //   ),
+                  // ],
+                ),
+                padding: const EdgeInsets.all(20),
+                child: const Text(
+                  '+',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    height: 1,
+                  ),
+                ),
               ),
             ),
           ),
