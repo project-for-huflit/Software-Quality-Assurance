@@ -18,6 +18,7 @@ import { FirestoreModule } from '@/provider/firestore';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { VisionModule } from '@/provider/vision_api/vision.module';
 
 @Module({
 	imports: [
@@ -62,6 +63,7 @@ import { AppService } from './app.service';
 		]),
 		// DatabaseModule,
 		// AuthModule,
+		VisionModule,
 	],
 	controllers: [AppController],
 	providers: [
