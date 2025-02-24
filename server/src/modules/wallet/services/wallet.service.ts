@@ -84,4 +84,8 @@ export class WalletService {
 
 		return response;
 	}
+
+	public async deleteWallet(id: string): Promise<void> {
+		await this.walletRepository.deleteWalletById(id);
+	}
 }

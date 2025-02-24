@@ -14,9 +14,13 @@ import { GlobalExceptionFilter } from '@/common/filters';
 import { LoggerMiddleware } from '@/common/middlewares';
 import { envSchema } from '@/common/venv';
 import { getEnvFile } from '@/global/env';
-import { FirestoreModule } from '@/provider/firestore';
+import { FirestoreModule } from '@/providers/firestore';
 
-import { WalletModule, NotificationModule } from '@/modules';
+import { 
+	WalletModule, 
+	NotificationModule, 
+	FileManagementModule 
+} from '@/modules';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -50,6 +54,7 @@ import { AppService } from './app.service';
 		// 	}),
 		// 	inject: [ConfigService],
 		// }),
+		// CloudinaryModule.forRoot({}),
 		ThrottlerModule.forRoot([
 			{
 				name: 'click',
@@ -58,14 +63,13 @@ import { AppService } from './app.service';
 			},
 			{
 				name: 'submit',
-        ttl: 1000,
+                ttl: 1000,
 				limit: 1,
 			},
 		]),
-		// DatabaseModule,
-		// AuthModule,
 		NotificationModule,
-		WalletModule
+		WalletModule,
+		FileManagementModule
 	],
 	controllers: [AppController],
 	providers: [
@@ -78,10 +82,6 @@ import { AppService } from './app.service';
 			provide: APP_PIPE,
 			useClass: ValidationPipe,
 		},
-		// {
-		// 	provide: APP_GUARD,
-		// 	useClass: CombinedGuard,
-		// },
 	],
 	exports: [],
 })

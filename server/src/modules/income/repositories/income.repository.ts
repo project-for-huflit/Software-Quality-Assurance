@@ -3,21 +3,21 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 
 import { getUniqueId, time } from '@/common/utils';
 
-import { WalletFilterDTO } from '../dtos';
-import { WalletDocument } from '../entities';
+import { IncomeFilterDTO } from '../dtos';
+import { IncomeDocument } from '../entities';
 
 @Injectable()
-export class WalletRepository {
-	private logger: Logger = new Logger(WalletRepository.name);
+export class IncomeRepository {
+	private logger: Logger = new Logger(IncomeRepository.name);
 
 	constructor(
-		@Inject(WalletDocument.collectionName)
-		private collection: CollectionReference<WalletDocument>,
+		@Inject(IncomeDocument.collectionName)
+		private collection: CollectionReference<IncomeDocument>,
 	) {}
 
-	async getWalletByDocumentId(
+	async getIncomeByDocumentId(
 		id: string,
-	): Promise<WalletDocument | null | undefined> {
+	): Promise<IncomeDocument | null | undefined> {
 		const snapshot = await this.collection.doc(id).get();
 
 		if (!snapshot.exists) {
@@ -38,9 +38,9 @@ export class WalletRepository {
 		}
 	}
 
-	private findGenerator(filter: WalletFilterDTO) {
+	private findGenerator(filter: IncomeFilterDTO) {
 		const collectionRef = this.collection;
-		let query: Query<WalletDocument> = collectionRef;
+		let query: Query<IncomeDocument> = collectionRef;
 
 		if (typeof filter?.isPublished === 'boolean') {
 			query = query.where('isPublished', '==', filter.isPublished);
@@ -49,8 +49,8 @@ export class WalletRepository {
 		return query;
 	}
 
-	async find(filter: WalletFilterDTO): Promise<WalletDocument[]> {
-		const list: WalletDocument[] = [];
+	async find(filter: IncomeFilterDTO): Promise<IncomeDocument[]> {
+		const list: IncomeDocument[] = [];
 		let query = this.findGenerator(filter);
 
 		query = query.orderBy('createdAt', 'desc');
@@ -63,7 +63,9 @@ export class WalletRepository {
 	}
 
 	async create(
-		payload: Pick<WalletDocument, 'title'> & Partial<WalletDocument>,
+		payload: Omit<IncomeDocument, 'id' | 'isPublished'> & { 
+			id?: string; isPublished?: boolean | null 
+		}
 	) {
 		const validPayload = this.getValidProperties(payload);
 		const document = this.collection.doc(validPayload.id);
@@ -73,7 +75,7 @@ export class WalletRepository {
 	}
 
 	public getValidProperties(
-		document: Omit<WalletDocument, 'id' | 'isPublished'> & {
+		document: Omit<IncomeDocument, 'id' | 'isPublished'> & {
 			id?: string;
 			isPublished?: boolean | null;
 		},
@@ -83,17 +85,18 @@ export class WalletRepository {
 		const createdAt = Timestamp.fromMillis(dueDateMillis);
 
 		return {
-			id: document.id || getUniqueId(),
-			title: document.title,
-			text: document.text ?? null,
-			imageUrl: document.imageUrl ?? null,
+			id: getUniqueId(),
+			amount: document.amount ?? null,
+			category: document.category ?? null,
 			isPublished: document.isPublished ?? false,
+			imageUrl: document.imageUrl ?? null,
+			incomeAt: document.incomeAt ?? null,
 			createdAt: document.createdAt ?? createdAt,
 			updatedAt: newUpdatedAt ? createdAt : (document.updatedAt ?? null),
 		};
 	}
 
-	public async deleteWalletById(id: string) {
+	public async deleteIncomeById(id: string) {
 		const doc = this.collection.doc(id);
 		return await doc.delete();
 	}

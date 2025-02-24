@@ -1,13 +1,14 @@
 import { Timestamp } from '@google-cloud/firestore';
 
-export class WalletDocument {
-	static collectionName = 'wallet';
+export class InvoiceDocument {
+	static collectionName = 'invoice';
 
 	id: string;
-	title: string;
-	text?: string | null;
+	amount: number;
+	category: string;
 	isPublished: boolean;
 	imageUrl?: string | null;
+	invoiceAt: Timestamp;
 	createdAt?: Timestamp | null;
 	updatedAt?: Timestamp | null;
 }

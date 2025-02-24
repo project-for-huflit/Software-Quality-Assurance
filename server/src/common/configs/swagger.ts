@@ -7,8 +7,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
  */
 export function setupSwagger(app: INestApplication<any>) {
 	const configSwagger = new DocumentBuilder()
-		.setTitle('User authentication')
-		.setDescription('API detail for user authen')
+		.setTitle('TRACKING EXPENSE')
+		.setDescription('API for app tracking expense')
 		.setVersion('1')
 		.addTag('Authentication')
 		.addBearerAuth()
