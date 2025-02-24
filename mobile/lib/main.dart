@@ -61,6 +61,7 @@ class TrackingApp extends StatelessWidget {
         // '/feed': (context) => Feed (currentUser: data.user_0),
         '/home': (context) => const HomeScreen(),
       },
+      
     );
   }
 }

@@ -127,7 +127,8 @@ extension DateTimePickerTypeExtension on DateTimePickerType {
       case DateTimePickerType.datetime:
         return 'yyyy/MM/dd HH:mm';
       case DateTimePickerType.time:
-        return withSecond ? 'HH:mm:ss' : 'HH:mm';
+        // return withSecond ? 'HH:mm:ss' : 'HH:mm';
+        return 'HH:mm';
     }
   }
 }

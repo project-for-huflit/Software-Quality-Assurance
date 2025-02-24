@@ -42,49 +42,52 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomSearchBar(
-          controller: _searchController,
-          onChanged: _filterCategories,
-        ),
-        Expanded(
-          child: GridView.builder(
-            padding: const EdgeInsets.all(16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-            ),
-            itemCount: filteredCategories.length,
-            itemBuilder: (context, index) {
-              final category = filteredCategories[index];
-              return GestureDetector(
-                onTap: () {
-                  widget.onCategorySelected(category['name']);
-                  Navigator.pop(context);
-                },
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundColor: Colors.grey.shade200,
-                      child: Icon(
-                        category['icon'],
-                        color: Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      category['name'],
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-              );
-            },
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          CustomSearchBar(
+            controller: _searchController,
+            onChanged: _filterCategories,
           ),
-        ),
-      ],
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+              ),
+              itemCount: filteredCategories.length,
+              itemBuilder: (context, index) {
+                final category = filteredCategories[index];
+                return GestureDetector(
+                  onTap: () {
+                    widget.onCategorySelected(category['name']);
+                    Navigator.pop(context);
+                  },
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Colors.grey.shade200,
+                        child: Icon(
+                          category['icon'],
+                          color: Colors.black,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        category['name'],
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

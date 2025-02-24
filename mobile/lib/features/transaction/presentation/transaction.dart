@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/features/transaction/presentation/expense_form.dart';
 import 'package:mobile/features/transaction/presentation/income_form.dart';
+import 'package:mobile/features/transaction/widget/button_confirm.dart';
 import '../widget/custom_tab_bar.dart';
 
 class Transaction extends StatefulWidget {
@@ -11,6 +12,10 @@ class Transaction extends StatefulWidget {
 }
 
 class _TransactionState extends State<Transaction> {
+  final List<String> _recurring = [
+    'Cash', 'Bank', 'Credit Card', 'Create Account'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,17 +40,35 @@ class _TransactionState extends State<Transaction> {
             ),
             bottom: const PreferredSize(
               preferredSize: Size.fromHeight(70),
-              child: CustomTabBar(), // Sử dụng CustomTabBar
+              child: CustomTabBar(),
             ),
           ),
-          body: Container(
-            color: Colors.white,
-            child: const TabBarView(
-                children: [
-                  IncomeForm(),
-                  ExpenseForm(),
-                ]),
-          )
+          body: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  child: const TabBarView(
+                    children: [
+                      IncomeForm(),
+                      ExpenseForm(),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ButtonConfirm(
+                    onPressed: () {
+                      // Xử lý xác nhận giao dịch
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
