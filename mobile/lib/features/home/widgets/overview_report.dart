@@ -29,7 +29,7 @@ class _OverViewReportState extends State<OverViewReport> {
     var maxVal = barData.map((e) => (double.tryParse(e["income"].toString()) ?? 0.0) + (double.tryParse(e["expense"].toString()) ?? 0.0)).reduce(max);
 
     return Container(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
@@ -38,18 +38,18 @@ class _OverViewReportState extends State<OverViewReport> {
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 6,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Overview Report",
             style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Container(
             height: 180,
             child: Row(
@@ -57,7 +57,7 @@ class _OverViewReportState extends State<OverViewReport> {
               children: barData.map((cObj) => BarView(cObj: cObj, barWidth: barWidth, maxVal: maxVal,)).toList(),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -70,27 +70,27 @@ class _OverViewReportState extends State<OverViewReport> {
                       color: Colors.grey.withOpacity(0.2),
                       spreadRadius: 2,
                       blurRadius: 6,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.green.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_downward,
                         color: Colors.green,
                         size: 20,
                       ),
                     ),
-                    SizedBox(width: 12),
-                    Column(
+                    const SizedBox(width: 12),
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -114,7 +114,7 @@ class _OverViewReportState extends State<OverViewReport> {
                   ],
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -124,27 +124,27 @@ class _OverViewReportState extends State<OverViewReport> {
                       color: Colors.grey.withOpacity(0.2),
                       spreadRadius: 2,
                       blurRadius: 6,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.red.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_upward,
                         color: Colors.red,
                         size: 20,
                       ),
                     ),
-                    SizedBox(width: 12),
-                    Column(
+                    const SizedBox(width: 12),
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(

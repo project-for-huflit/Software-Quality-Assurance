@@ -11,10 +11,10 @@ class TransactionRow extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Color(0xffFFE5F3),
-            offset: const Offset(0, 7),
+            offset: Offset(0, 7),
             blurRadius: 15,
           ),
         ],

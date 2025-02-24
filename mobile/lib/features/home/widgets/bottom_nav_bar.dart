@@ -11,7 +11,7 @@ class BottomNavBarWidget extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        color: Color.fromARGB(128, 255, 255, 255),
+        color: const Color.fromARGB(128, 255, 255, 255),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -25,16 +25,16 @@ class BottomNavBarWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Row(
-            spacing: 10,
+            // spacing: 10,
             children: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.home_outlined, color: Colors.blueAccent),
+                icon: const Icon(Icons.home_outlined, color: Colors.blueAccent),
                 iconSize: 32,
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.pie_chart_outline, color: Colors.blueAccent),
+                icon: const Icon(Icons.pie_chart_outline, color: Colors.blueAccent),
                 iconSize: 32,
               ),
             ],
@@ -75,16 +75,16 @@ class BottomNavBarWidget extends StatelessWidget {
             ),
           ),
           Row(
-            spacing: 10,
+            // spacing: 10,
             children: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.wallet_outlined, color: Colors.blueAccent), // Biểu tượng màu xanh dương
+                icon: const Icon(Icons.wallet_outlined, color: Colors.blueAccent), // Biểu tượng màu xanh dương
                 iconSize: 32,
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.person_outline, color: Colors.blueAccent), // Biểu tượng màu xanh dương
+                icon: const Icon(Icons.person_outline, color: Colors.blueAccent), // Biểu tượng màu xanh dương
                 iconSize: 32,
               ),
             ],

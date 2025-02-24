@@ -6,6 +6,7 @@ import '/features/auth/register/presentation/register_screen.dart';
 import '/features/launch/app.dart';
 
 import 'features/home/presentation/home_screen.dart';
+import 'features/wallet/screens/createWallet/app.dart';
 import 'firebase_options.dart';
 
 import '__mock__/data.dart' as data;
@@ -50,7 +51,6 @@ class TrackingApp extends StatelessWidget {
       //   colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 104, 35, 222)),
       //   useMaterial3: true,
       // ),
-      // home: const MyHomePage(title: 'Flutter Tracking'),
 
       theme: ThemeData.light(useMaterial3: true),
       initialRoute: '/',
@@ -58,6 +58,7 @@ class TrackingApp extends StatelessWidget {
         '/': (context) => const FirstScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
+        '/wallet/create': (context) => const CreateWalletScreen(),
         // '/feed': (context) => Feed (currentUser: data.user_0),
         '/home': (context) => const HomeScreen(),
       },
