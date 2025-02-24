@@ -6,8 +6,19 @@ export class ImageService {
     constructor(private cloudinary: CloudinaryService) {}
 
     async uploadImageToCloudinary(file: Express.Multer.File) {
-        return await this.cloudinary.uploadImage(file).catch(() => {
-            throw new BadRequestException('Invalid file type.');
-        })
+        console.log('🚀 Uploading file:', file.mimetype, file.path); // Debug
+
+        if (!file || !file.buffer) {
+            throw new BadRequestException('No file uploaded or file is empty');
+        }
+        
+        try {
+          const result = await this.cloudinary.uploadImage(file);
+          console.log('✅ Cloudinary Response:', result);
+          return result;
+        } catch (error) {
+          console.error('❌ Cloudinary Upload Error:', error);
+          throw new BadRequestException('Cloudinary upload failed');
+        }
     }
 } 
