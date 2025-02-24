@@ -9,4 +9,4 @@ import { IncomeService } from './services';
 	providers: [IncomeService, IncomeRepository],
 	exports: [IncomeService],
 })
-export class WalletModule {}
+export class IncomeModule {}

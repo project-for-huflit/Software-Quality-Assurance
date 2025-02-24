@@ -8,4 +8,4 @@ import { InvoiceRepository } from './repositories';
 	providers: [InvoiceService, InvoiceRepository],
 	exports: [InvoiceService],
 })
-export class WalletModule {}
+export class InvoiceModule {}
