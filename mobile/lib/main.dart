@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mobile/features/wallet/screens/app.dart';
 import '/features/auth/login/presentation/login_screen.dart';
 import '/features/auth/register/presentation/register_screen.dart';
 import '/features/launch/app.dart';
@@ -59,6 +60,7 @@ class TrackingApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         '/wallet/create': (context) => const CreateWalletScreen(),
+        '/wallet': (context) => const WalletScreen(),
         // '/feed': (context) => Feed (currentUser: data.user_0),
         '/home': (context) => const HomeScreen(),
       },

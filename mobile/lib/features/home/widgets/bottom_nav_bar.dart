@@ -78,7 +78,9 @@ class BottomNavBarWidget extends StatelessWidget {
             // spacing: 10,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context,'/wallet');
+                },
                 icon: const Icon(Icons.wallet_outlined, color: Colors.blueAccent), // Biểu tượng màu xanh dương
                 iconSize: 32,
               ),
