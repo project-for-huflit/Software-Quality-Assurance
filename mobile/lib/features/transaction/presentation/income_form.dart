@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,8 +9,8 @@ import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/features/transaction/widget/camera_button.dart';
 import 'package:mobile/features/transaction/widget/recurring_payment.dart';
-
 import '../widget/gallery_button.dart';
+import '../widget/text_recognition_service.dart';
 
 class IncomeForm extends StatefulWidget {
   const IncomeForm({super.key});
@@ -22,11 +21,21 @@ class IncomeForm extends StatefulWidget {
 
 class _IncomeFormState extends State<IncomeForm> {
   File? _selectedImage;
+  String _recognizedText = '';
 
-  void _handleImageSelected(File? image) {
-    setState(() {
-      _selectedImage = image;
-    });
+  Future<void> _handleImageSelected(File? image) async {
+    if (image == null) return;
+    setState(() => _selectedImage = image);
+
+    final text = await TextRecognitionService.recognizeText(image);
+    setState(() => _recognizedText = text);
+    print('Dữ liệu OCR: $_recognizedText');
+  }
+
+  @override
+  void dispose() {
+    TextRecognitionService.dispose();
+    super.dispose();
   }
 
   final TextEditingController _amountController = TextEditingController();
