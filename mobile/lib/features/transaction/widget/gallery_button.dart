@@ -21,8 +21,8 @@ class GalleryButton extends StatelessWidget {
       onTap: _pickImageFromGallery,
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xB371ECA7),
-          border: Border.all(color: Color(0xFF14E97B)),
+          color: const Color(0xB371ECA7),
+          border: Border.all(color: const Color(0xFF14E97B)),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Center(

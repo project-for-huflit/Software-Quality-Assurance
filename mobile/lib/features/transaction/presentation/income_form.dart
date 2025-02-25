@@ -72,7 +72,6 @@ class _IncomeFormState extends State<IncomeForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  spacing: 16,
                   children: [
                     //CameraButton
                     Expanded(
@@ -87,6 +86,7 @@ class _IncomeFormState extends State<IncomeForm> {
                       ),
                     ),
                   ],
+                  spacing: 16,
                 ),
 
                 const SizedBox(height: 16),

@@ -33,7 +33,7 @@ class _RecurringPaymentState extends State<RecurringPayment> {
             mainAxisSize: MainAxisSize.min,
             children: _recurringTime.map((item) {
               return ListTile(
-                title: Text(item, style: TextStyle(fontSize: 16)),
+                title: Text(item, style: const TextStyle(fontSize: 16)),
                 onTap: () {
                   setState(() {
                     selectedValue = item;

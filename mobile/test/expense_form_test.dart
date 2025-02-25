@@ -9,7 +9,7 @@ void main() {
     testWidgets('should render all components of the ExpenseForm', (WidgetTester tester) async {
       // Arrange
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: ExpenseForm(),
           ),
@@ -29,7 +29,7 @@ void main() {
     testWidgets('should allow entering an amount', (WidgetTester tester) async {
       // Arrange
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: ExpenseForm(),
           ),
@@ -47,7 +47,7 @@ void main() {
     testWidgets('should open category bottom sheet when tapping on "Select Category"', (WidgetTester tester) async {
       // Arrange
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: ExpenseForm(),
           ),
@@ -67,7 +67,7 @@ void main() {
     testWidgets('should allow selecting an account from the dropdown', (WidgetTester tester) async {
       // Arrange
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: ExpenseForm(),
           ),
@@ -90,7 +90,7 @@ void main() {
     testWidgets('should allow selecting a date using the BoardDateTimePicker', (WidgetTester tester) async {
       // Arrange
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: ExpenseForm(),
           ),
