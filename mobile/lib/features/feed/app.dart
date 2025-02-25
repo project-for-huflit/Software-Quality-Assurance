@@ -84,7 +84,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
           'Index 0: One',
           style: optionStyle,
         )),
-    Text(
+    const Text(
       'Index 1: Two',
       style: optionStyle,
     ),

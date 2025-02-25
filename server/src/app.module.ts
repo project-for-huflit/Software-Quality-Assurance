@@ -26,7 +26,7 @@ import {
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { VisionModule } from '@/provider/vision_api/vision.module';
+import { VisionModule } from './providers/vision_api/vision.module';
 
 @Module({
 	imports: [
@@ -70,7 +70,7 @@ import { VisionModule } from '@/provider/vision_api/vision.module';
 				limit: 1,
 			},
 		]),
-    VisionModule,
+        VisionModule,
 		NotificationModule,
 		WalletModule,
 		InvoiceModule,

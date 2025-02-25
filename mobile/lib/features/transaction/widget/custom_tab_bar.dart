@@ -38,7 +38,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
           indicatorSize: TabBarIndicatorSize.tab,
           indicator: BoxDecoration(
             color: _selectedIndex == 0
-                ? Color(0xFF14E97B)
+                ? const Color(0xFF14E97B)
                 : _selectedIndex == 1
                 ? Colors.red
                 : Colors.blue,

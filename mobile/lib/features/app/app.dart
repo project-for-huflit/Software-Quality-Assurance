@@ -5,7 +5,6 @@ class HomeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement ==
     return const Placeholder();
   }
 }

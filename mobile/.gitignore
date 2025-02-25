@@ -44,3 +44,6 @@ app.*.map.json
 
 .vscode/
 .idea/
+
+# FVM Version Cache
+.fvm/

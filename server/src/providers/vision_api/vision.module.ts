@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { VisionService } from './vision.service';
-import { VisionController } from '@/provider/vision_api/vision.controller';
+import { VisionController } from '@/providers/vision_api/vision.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as vision from '@google-cloud/vision';
 import * as path from 'path';
