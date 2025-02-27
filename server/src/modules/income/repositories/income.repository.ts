@@ -1,8 +1,6 @@
 import { CollectionReference, Query, Timestamp } from '@google-cloud/firestore';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-
 import { getUniqueId, time } from '@/common/utils';
-
 import { IncomeFilterDTO } from '../dtos';
 import { IncomeDocument } from '../entities';
 
@@ -63,9 +61,10 @@ export class IncomeRepository {
 	}
 
 	async create(
-		payload: Omit<IncomeDocument, 'id' | 'isPublished'> & { 
-			id?: string; isPublished?: boolean | null 
-		}
+		payload: Omit<IncomeDocument, 'id' | 'isPublished'> & {
+			id?: string;
+			isPublished?: boolean | null;
+		},
 	) {
 		const validPayload = this.getValidProperties(payload);
 		const document = this.collection.doc(validPayload.id);
