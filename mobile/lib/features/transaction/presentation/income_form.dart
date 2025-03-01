@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:mobile/features/transaction/presentation/bottom_sheet_cate.dart';
+import 'package:mobile/features/transaction/service/gemini_service.dart';
 import 'package:mobile/features/transaction/widget/board_date_time_picker.dart';
 import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +22,7 @@ class IncomeForm extends StatefulWidget {
 class _IncomeFormState extends State<IncomeForm> {
   File? _selectedImage;
   String _recognizedText = '';
+  final GeminiService _geminiService = GeminiService();
 
   Future<void> _handleImageSelected(File? image) async {
     if (image == null) return;
@@ -30,6 +31,11 @@ class _IncomeFormState extends State<IncomeForm> {
     final text = await TextRecognitionService.recognizeText(image);
     setState(() => _recognizedText = text);
     print('Dữ liệu OCR: $_recognizedText');
+    try {
+      await _geminiService.processText(_recognizedText, 'tiền chi');
+    } catch (e) {
+      print('Lỗi xử lý Gemini: $e');
+    }
   }
 
   @override
