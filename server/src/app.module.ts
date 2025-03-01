@@ -1,3 +1,4 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import {
 	MiddlewareConsumer,
 	Module,
@@ -5,7 +6,6 @@ import {
 	RequestMethod,
 	ValidationPipe,
 } from '@nestjs/common';
-import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -14,20 +14,20 @@ import { GlobalExceptionFilter } from '@/common/filters';
 import { LoggerMiddleware } from '@/common/middlewares';
 import { envSchema } from '@/common/venv';
 import { getEnvFile } from '@/global/env';
-import { FirestoreModule } from '@/providers/firestore';
-
 import {
-	WalletModule,
-	InvoiceModule,
-	IncomeModule,
-	NotificationModule,
 	FileManagementModule,
+	IncomeModule,
+	InvoiceModule,
+	NotificationModule,
+	WalletModule,
 } from '@/modules';
+import { Cate_expenseModule } from '@/modules/category/cate_expense/cate_expense.module';
+import { Cate_incomeModule } from '@/modules/category/cate_income/cate_income.module';
+import { FirestoreModule } from '@/providers/firestore';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { VisionModule } from './providers/vision_api/vision.module';
-import { Cate_incomeModule } from '@/modules/category/cate_income/cate_income.module';
 
 @Module({
 	imports: [
@@ -78,6 +78,7 @@ import { Cate_incomeModule } from '@/modules/category/cate_income/cate_income.mo
 		IncomeModule,
 		FileManagementModule,
 		Cate_incomeModule,
+		Cate_expenseModule,
 	],
 	controllers: [AppController],
 	providers: [

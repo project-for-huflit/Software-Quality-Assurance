@@ -6,39 +6,39 @@ import {
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
 import { getUniqueId } from '@/common/utils';
-import { CreateCateIncomeDto } from '@/modules/category/cate_income/dtos/create-cate-income.dto';
-import { Cate_IncomeDocument } from '@/modules/category/cate_income/entities/cate_income.document';
+import { CreateCateExpenseDto } from '@/modules/category/cate_expense/dtos/create-cate-expense.dto';
+import { Cate_ExpenseDocument } from '@/modules/category/cate_expense/entities/cate_expense.document';
 import { FirestoreDatabaseProvider } from '@/providers/firestore/providers/firestore.providers';
 
 @Injectable()
-export class Cate_incomeService {
+export class Cate_expenseService {
 	constructor(
 		@Inject(FirestoreDatabaseProvider) private firestore: Firestore,
-		@Inject(Cate_IncomeDocument.collectionName)
-		private collection: CollectionReference<Cate_IncomeDocument>,
+		@Inject(Cate_ExpenseDocument.collectionName)
+		private collection: CollectionReference<Cate_ExpenseDocument>,
 	) {}
 
-	public async create(createCateIncomeDto: CreateCateIncomeDto) {
+	public async create(createCateExpenseDto: CreateCateExpenseDto) {
 		return this.firestore.runTransaction(async (transaction) => {
 			const existed = await transaction.get(
-				this.collection.where('name', '==', createCateIncomeDto.name).limit(1),
+				this.collection.where('name', '==', createCateExpenseDto.name).limit(1),
 			);
 
 			if (!existed.empty) {
-				throw new BadRequestException('Tên danh mục thu đã tồn tại.');
+				throw new BadRequestException('Tên danh mục chi đã tồn tại.');
 			}
 
 			const id = getUniqueId();
 			const data = {
 				id,
-				name: createCateIncomeDto.name,
+				name: createCateExpenseDto.name,
 				createdAt: Timestamp.now(),
 				updatedAt: Timestamp.now(),
 			};
 
 			transaction.set(this.collection.doc(id), data);
 
-			return { message: 'Tạo danh mục thu thành công!', data };
+			return { message: 'Tạo danh mục chi thành công!', data };
 		});
 	}
 
@@ -47,7 +47,7 @@ export class Cate_incomeService {
 		const documents = snapshot.docs.map((doc) => doc.data());
 
 		return {
-			message: 'Lấy danh sách danh mục thu thành công!',
+			message: 'Lấy danh sách danh mục chi thành công!',
 			data: documents,
 		};
 	}
@@ -57,11 +57,11 @@ export class Cate_incomeService {
 		const res = await nameRef.get();
 
 		if (!res.exists) {
-			throw new BadRequestException('Danh mục thu không tồn tại!');
+			throw new BadRequestException('Danh mục chi không tồn tại!');
 		}
 
 		await nameRef.delete();
 
-		return { message: 'Xóa danh mục thu thành công!' };
+		return { message: 'Xóa danh mục chi thành công!' };
 	}
 }

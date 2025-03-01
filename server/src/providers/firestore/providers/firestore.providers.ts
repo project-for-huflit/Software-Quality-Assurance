@@ -1,3 +1,4 @@
+import { Cate_ExpenseDocument } from '@/modules/category/cate_expense/entities/cate_expense.document';
 import { Cate_IncomeDocument } from '@/modules/category/cate_income/entities/cate_income.document';
 import { IncomeDocument } from '@/modules/income/entities';
 import { InvoiceDocument } from '@/modules/invoice/entities';
@@ -12,4 +13,5 @@ export const FirestoreCollectionProviders: string[] = [
 	InvoiceDocument.collectionName,
 	IncomeDocument.collectionName,
 	Cate_IncomeDocument.collectionName,
+	Cate_ExpenseDocument.collectionName,
 ];
