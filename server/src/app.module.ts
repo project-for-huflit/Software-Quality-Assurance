@@ -16,22 +16,23 @@ import { envSchema } from '@/common/venv';
 import { getEnvFile } from '@/global/env';
 import { FirestoreModule } from '@/providers/firestore';
 
-import { 
+import {
 	WalletModule,
 	InvoiceModule,
 	IncomeModule,
-	NotificationModule, 
-	FileManagementModule
+	NotificationModule,
+	FileManagementModule,
 } from '@/modules';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { VisionModule } from './providers/vision_api/vision.module';
+import { Cate_incomeModule } from '@/modules/category/cate_income/cate_income.module';
 
 @Module({
 	imports: [
 		CacheModule.register({
-			isGlobal: true
+			isGlobal: true,
 		}),
 		ConfigModule.forRoot({
 			envFilePath: getEnvFile(),
@@ -66,16 +67,17 @@ import { VisionModule } from './providers/vision_api/vision.module';
 			},
 			{
 				name: 'submit',
-                ttl: 1000,
+				ttl: 1000,
 				limit: 1,
 			},
 		]),
-        VisionModule,
+		VisionModule,
 		NotificationModule,
 		WalletModule,
 		InvoiceModule,
 		IncomeModule,
-		FileManagementModule
+		FileManagementModule,
+		Cate_incomeModule,
 	],
 	controllers: [AppController],
 	providers: [

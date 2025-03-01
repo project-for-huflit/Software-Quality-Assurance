@@ -7,13 +7,9 @@ import {
 	FirestoreOptionsProvider,
 } from './providers/firestore.providers';
 import { FirestoreModuleOptions } from './types';
-import { FirestoreService } from '@/providers/firestore/services';
 
 @Global()
-@Module({
-	providers: [FirestoreService],
-	exports: [FirestoreService],
-})
+@Module({})
 export class FirestoreModule {
 	static forRoot(options: FirestoreModuleOptions): DynamicModule {
 		const collectionProviders = FirestoreCollectionProviders.map(
@@ -40,13 +36,8 @@ export class FirestoreModule {
 			global: true,
 			module: FirestoreModule,
 			imports: options.imports,
-			providers: [
-				FirestoreService,
-				optionsProvider,
-				dbProvider,
-				...collectionProviders,
-			],
-			exports: [dbProvider, FirestoreService, ...collectionProviders],
+			providers: [optionsProvider, dbProvider, ...collectionProviders],
+			exports: [dbProvider, ...collectionProviders],
 		};
 	}
 }

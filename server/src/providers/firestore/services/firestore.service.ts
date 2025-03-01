@@ -14,8 +14,4 @@ export class FirestoreService {
 
 		return snapshot.docs.map((doc) => doc.data());
 	}
-
-	getCollectionRef(collection: string): admin.firestore.CollectionReference {
-		return this.firestore.collection(collection);
-	}
 }
