@@ -5,9 +5,7 @@ import {
 	Get,
 	NotFoundException,
 	Param,
-	ParseBoolPipe,
 	Post,
-	Query,
 } from '@nestjs/common';
 
 import { InvoiceDocument } from '../entities';
@@ -19,10 +17,8 @@ export class InvoiceController {
 	constructor(private readonly invoiceService: InvoiceService) {}
 
 	@Get('')
-	async getList(
-		@Query('isPublished', ParseBoolPipe) isPublished?: boolean,
-	): Promise<InvoiceDocument[]> {
-		const response = await this.invoiceService.getList({ isPublished });
+	async getList(): Promise<InvoiceDocument[]> {
+		const response = await this.invoiceService.getList();
 
 		if (!response?.length) {
 			throw new NotFoundException('Invoice is not exist');

@@ -6,7 +6,6 @@ export class IncomeDocument {
 	id: string;
 	amount: number;
 	category: string;
-	isPublished: boolean;
 	imageUrl?: string | null;
 	incomeAt: Timestamp;
 	createdAt?: Timestamp | null;

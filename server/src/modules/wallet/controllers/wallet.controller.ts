@@ -22,10 +22,8 @@ export class WalletController {
 	constructor(private readonly walletService: WalletService) {}
 
 	@Get('')
-	async getList(
-		@Query('isPublished', ParseBoolPipe) isPublished?: boolean,
-	): Promise<WalletDocument[]> {
-		const response = await this.walletService.getList({ isPublished });
+	async getList(): Promise<WalletDocument[]> {
+		const response = await this.walletService.getList();
 
 		if (!response?.length) {
 			throw new NotFoundException('Wallet is not exist');

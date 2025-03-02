@@ -6,7 +6,6 @@ export class InvoiceDocument {
 	id: string;
 	amount: number;
 	category: string;
-	isPublished: boolean;
 	imageUrl?: string | null;
 	invoiceAt: Timestamp;
 	createdAt?: Timestamp | null;

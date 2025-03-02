@@ -38,32 +38,18 @@ export class InvoiceRepository {
 		}
 	}
 
-	private findGenerator(filter: InvoiceFilterDTO) {
-		const collectionRef = this.collection;
-		let query: Query<InvoiceDocument> = collectionRef;
-
-		if (typeof filter?.isPublished === 'boolean') {
-			query = query.where('isPublished', '==', filter.isPublished);
-		}
-
-		return query;
-	}
-
-	async find(filter: InvoiceFilterDTO): Promise<InvoiceDocument[]> {
+	async find(): Promise<InvoiceDocument[]> {
 		const list: InvoiceDocument[] = [];
-		let query = this.findGenerator(filter);
 
-		query = query.orderBy('createdAt', 'desc');
-
-		const snapshot = await query.get();
-
-		snapshot.forEach((doc) => list.push(doc.data()));
-
+		const invoiceList = await  this.collection.get();
+		invoiceList.forEach((doc) => {
+			list.push(doc.data() as InvoiceDocument);
+		});
 		return list;
 	}
 
 	async create(
-		payload: Omit<InvoiceDocument, 'id' | 'isPublished'> & { 
+		payload: Omit<InvoiceDocument, 'id' > & { 
 			id?: string; isPublished?: boolean | null 
 		},
 	) {
@@ -75,9 +61,8 @@ export class InvoiceRepository {
 	}
 
 	public getValidProperties(
-		document: Omit<InvoiceDocument, 'id' | 'isPublished'> & {
+		document: Omit<InvoiceDocument, 'id' > & {
 			id?: string;
-			isPublished?: boolean | null;
 		},
 		newUpdatedAt = false,
 	) {
@@ -88,7 +73,6 @@ export class InvoiceRepository {
 			id: getUniqueId(),
 			amount: document.amount ?? null,
 			category: document.category ?? null,
-			isPublished: document.isPublished ?? false,
 			imageUrl: document.imageUrl ?? null,
 			invoiceAt: document.invoiceAt ?? null,
 			createdAt: document.createdAt ?? createdAt,
