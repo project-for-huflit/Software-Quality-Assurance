@@ -34,11 +34,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
   ];
   final List<Map<String, dynamic>> expenseCategories = [
     {'name': 'Gym', 'icon': Icons.sports_gymnastics},
-    {'name': 'Healthy', 'icon': Icons.trending_up},
     {'name': 'Shopping', 'icon': Icons.person},
-    {'name': 'Education', 'icon': Icons.cast_for_education},
-    {'name': 'Holiday', 'icon': Icons.person},
-    {'name': 'Entertainment', 'icon': Icons.games},
   ];
 
   String? selectedValue;
@@ -134,6 +130,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                           maxChildSize: 0.9, // 90% chiều cao tối đa
                           builder: (context, scrollController) {
                             return BottomSheetCate(
+                              isIncome: false,
                               categories: expenseCategories,
                               onCategorySelected: (category) {
                                 setState(() {

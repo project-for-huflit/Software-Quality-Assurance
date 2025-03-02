@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../widget/custom_search_bar.dart';
+import '../widget/dialog_add_cate.dart';
 
 class BottomSheetCate extends StatefulWidget {
   final Function(String category) onCategorySelected;
   final List<Map<String, dynamic>> categories;
+  final bool isIncome;
 
   const BottomSheetCate({
     super.key,
     required this.onCategorySelected,
     required this.categories,
+    required this.isIncome,
   });
 
   @override
@@ -40,6 +43,21 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
     });
   }
 
+  void _showAddCategoryDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => DialogAddCate(
+        isIncome: widget.isIncome,
+        onCategoryAdded: (newCategory) {
+          setState(() {
+            widget.categories.add({'name': newCategory, 'icon': Icons.category});
+            filteredCategories = List.from(widget.categories);
+          });
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,8 +74,24 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
               ),
-              itemCount: filteredCategories.length,
+              itemCount: filteredCategories.length + 1,
               itemBuilder: (context, index) {
+                if (index == filteredCategories.length) {
+                  return GestureDetector(
+                    onTap: () => _showAddCategoryDialog(context),
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.grey.shade200,
+                          child: const Icon(Icons.add, color: Colors.black, size: 24),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text("Thêm", style: TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                  );
+                }
                 final category = filteredCategories[index];
                 return GestureDetector(
                   onTap: () {
