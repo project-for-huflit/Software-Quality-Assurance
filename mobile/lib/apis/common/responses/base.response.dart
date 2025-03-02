@@ -50,9 +50,9 @@ class  ListResponse<T> {
     return  'ListResponse< $T >{page: $page , results: $results , totalPages: $totalPages , totalResults: $totalResults }' ; 
   } 
 
-  @override 
-  factory ListResponse.fromJson( 
-      Map<String, dynamic> json, T Function( Object? json) fromJsonT) { 
-    return _$ListResponseFromJson(json, fromJsonT); 
-  }
+  // @override 
+  // factory ListResponse.fromJson( 
+  //     Map<String, dynamic> json, T Function( Object? json) fromJsonT) { 
+  //   return _$ListResponseFromJson(json, fromJsonT); 
+  // }
 }

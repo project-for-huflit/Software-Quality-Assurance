@@ -1,9 +1,7 @@
 import { TypeWallet } from '@/common/constants';
-import { IsBoolean, IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsString } from 'class-validator';
 
 export class WalletCreationDTO {
-    // @IsString()
-    // id: string;
     @IsString()
     name: string;
     @IsString()
@@ -14,13 +12,9 @@ export class WalletCreationDTO {
         }
     )
     type: string | null;
-    @IsBoolean()
-    isPublished: boolean;
 
-    constructor(name: string, type: string, isPublished: boolean) {
-        // this.id = id;
+    constructor(name: string, type: string) {
         this.name = name;
         this.type = type;
-        this.isPublished = isPublished;
     }
 }

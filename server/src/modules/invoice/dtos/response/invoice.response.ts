@@ -1,8 +1,9 @@
 export class WalletResponseItem {
 	public id: string;
-	public title: string;
-	public text?: string | null;
-	public isPublished: boolean;
+	public amount: number;
+	public category: string;
+	public imageUrl: string;
+	public invoiceAt: string;
 	public createdAt?: string | null;
 	public updatedAt?: string | null;
 }

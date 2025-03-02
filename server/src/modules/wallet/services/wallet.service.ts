@@ -8,8 +8,8 @@ import { WalletRepository } from '../repositories';
 export class WalletService {
 	constructor(private readonly walletRepository: WalletRepository) {}
 
-	public async getList(filter: WalletFilterDTO) {
-		return this.walletRepository.find(filter);
+	public async getList() {
+		return this.walletRepository.find();
 	}
 
 	public async getItem(id: string) {
@@ -42,7 +42,6 @@ export class WalletService {
 		// 	| 'title'
 		// 	| 'text'
 		// 	| 'imageUrl'
-		// 	| 'isPublished'
 		// 	| 'createdAt'
 		// 	| 'updatedAt';
 
@@ -70,15 +69,12 @@ export class WalletService {
 			throw new NotFoundException('Example document does not exist');
 		}
 
-		const newPublishedState = !data?.isPublished;
-
 		const response = this.walletRepository.getValidProperties(
-			{ ...data, isPublished: newPublishedState },
+			{ ...data },
 			true,
 		);
 
 		await doc.update({
-			isPublished: newPublishedState,
 			updatedAt: response?.updatedAt,
 		});
 

@@ -6,7 +6,6 @@ export class WalletDocument {
 	id: string;
 	name: string;
 	type?: string | null;
-	isPublished: boolean;
 	createdAt?: Timestamp | null;
 	updatedAt?: Timestamp | null;
 }

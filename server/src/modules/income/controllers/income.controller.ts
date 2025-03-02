@@ -20,10 +20,8 @@ export class IncomeController {
 	constructor(private readonly incomeService: IncomeService) {}
 
 	@Get('')
-	async getList(
-		@Query('isPublished', ParseBoolPipe) isPublished?: boolean,
-	): Promise<IncomeDocument[]> {
-		const response = await this.incomeService.getList({ isPublished });
+	async getList(): Promise<IncomeDocument[]> {
+		const response = await this.incomeService.getList();
 
 		if (!response?.length) {
 			throw new NotFoundException('Income is not exist');
