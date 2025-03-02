@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/features/home/widgets/bottom_nav_bar.dart';
+import 'package:mobile/features/setting/widgets/settingMenu/setting_menu.dart';
 
-import '../widgets/settingMenuTitle/app.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -41,36 +42,42 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.0),
-          child: Column(
-            children: [
-              Column(
-                children: [
-                  Text(
-                    'Setting',
-                    style: titleScreenWallet,
-                  ),
-                ],
-              ),
-              SizedBox(height: 20,),
-              Padding(
-                padding: EdgeInsets.all(24),
-                child: Column(
-                    children: [
-                      // Account setting
-                      SettingMenuTitle(
-                        icon: Icons.abc_outlined, title: 'Cài đặt ví và danh mục', subtitle: 'Thể loại, tiền tệ, số dư ban đầu',
-                      ),
-                      SettingMenuTitle(
-                        icon: Icons.abc_outlined, title: 'Cài đặt tài khoản', subtitle: 'Ngôn ngữ, xuất nhập CSV',
-                      )
-                    ],
-                  ),
-              )
-            ],
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: const BottomNavBarWidget(),
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                const Column(
+                  children: [
+                    Text(
+                      'Setting',
+                      style: titleScreenWallet,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20,),
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                      children: [
+                        // const SectionHeading(title: 'account'),
+                        const SizedBox(height: 16),
+
+                        SettingMenu(
+                          icon: Icons.add_chart_outlined,
+                          title: 'Irorem isoasdoj',
+                          subTitle: 'Set shopping delivery address',
+                          onTap: () {},
+                        )
+                      ],
+                    ),
+                )
+              ],
+            ),
           ),
         ),
       ),

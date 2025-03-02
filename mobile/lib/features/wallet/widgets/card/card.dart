@@ -1,141 +1,82 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CardWallet extends StatefulWidget {
-  const CardWallet({ super.key });
+  const CardWallet({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CardState createState() => _CardState();
 }
 
 class _CardState extends State<CardWallet> {
-  static const TextStyle titleCardWallet = TextStyle(
-    fontSize: 16,
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
-  );
-
-  static const TextStyle valueCardWallet = TextStyle(
-    fontSize: 40,
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
-  );
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return _buildCreditCard(
+        color: const Color(0xFF090943),
+        cardExpiration: "TPB xxxx 8944",
+        cardHolder: "TPB xxxx 8944",
+        cardNumber: "3546 7532 XXXX 9742");
+  }
+
+  Card _buildCreditCard(
+      {required Color color,
+      required String cardNumber,
+      required String cardHolder,
+      required String cardExpiration}) {
+    return Card(
+      elevation: 4.0,
+      color: color,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+      ),
       child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.width / 2.2,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-                Theme.of(context).colorScheme.tertiary,
-              ],
-              transform: const GradientRotation(pi / 4)
-            ),
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 4,
-                color: Colors.grey.shade300,
-                offset: const Offset(5, 5)
-              )
-            ]
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Total balance',
-                style: titleCardWallet,
-              ),
-              const Text(
-                'Total balance',
-                style: valueCardWallet,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: const BoxDecoration(
-                            color: Colors.white30,
-                            shape: BoxShape.circle
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              CupertinoIcons.arrow_down,
-                              size: 12,
-                              color: Colors.greenAccent
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8,),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Incomes',
-                              style: titleCardWallet,
-                            ),
-                            Text(
-                              '2500',
-                              style: valueCardWallet,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: const BoxDecoration(
-                            color: Colors.white30,
-                            shape: BoxShape.circle
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              CupertinoIcons.arrow_down,
-                              size: 12,
-                              color: Colors.greenAccent
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8,),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Invoices',
-                              style: titleCardWallet,
-                            ),
-                            Text(
-                              '2500',
-                              style: valueCardWallet,
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
+        height: 200,
+        // width: 
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 22.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment:
+              MainAxisAlignment.end,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                _buildDetailsBlock(
+                  label: 'wallet',
+                  value: cardHolder,
                 ),
-              )
-            ],
-          ),
+              ],
+            ),
+            Text(
+              cardNumber,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 21,
+                fontFamily: 'CourrierPrime',
+              ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+
+  Column _buildDetailsBlock({required String label, required String value}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          label,
+          style: const TextStyle(
+              color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        )
+      ],
     );
   }
 }

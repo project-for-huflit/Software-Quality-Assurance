@@ -46,8 +46,13 @@ class FirebaseOptionsMacos {
   final String iosBundleId = dotenv.env['MAXOS_iosBundleId'] ?? '';
 }
 
+class BaseConstants {
+  final String nestUrl = dotenv.env['NEST_URL_API'] ?? '';
+}
+
 final webConfig = FirebaseOptionsWeb();
 final androidConfig = FirebaseOptionsAndroid();
 final windowsConfig = FirebaseOptionsWindow();
 final iosConfig = FirebaseOptionsIos();
 final macosConfig = FirebaseOptionsMacos();
+final baseConfig = BaseConstants();
