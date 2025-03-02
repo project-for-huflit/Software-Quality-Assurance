@@ -81,7 +81,7 @@ export class IncomeRepository {
 		},
 		newUpdatedAt = false,
 	) {
-		const dueDateMillis = time().valueOf();
+		const dueDateMillis = Date.now();
 		const createdAt = Timestamp.fromMillis(dueDateMillis);
 
 		return {
