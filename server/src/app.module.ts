@@ -57,7 +57,6 @@ import { VisionModule } from './providers/vision_api/vision.module';
 		// 	}),
 		// 	inject: [ConfigService],
 		// }),
-		// CloudinaryModule.forRoot({}),
 		ThrottlerModule.forRoot([
 			{
 				name: 'click',

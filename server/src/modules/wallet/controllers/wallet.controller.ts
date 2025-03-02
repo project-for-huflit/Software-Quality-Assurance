@@ -15,6 +15,7 @@ import { AccountRequestBody } from '@/modules/auth/dtos/request';
 
 import { WalletDocument } from '../entities';
 import { WalletService } from '../services';
+import { WalletCreationDTO } from '../dtos';
 
 @Controller('wallet')
 export class WalletController {
@@ -45,7 +46,7 @@ export class WalletController {
 	}
 
 	@Post('/')
-	async create(@Body() body: AccountRequestBody): Promise<WalletDocument> {
+	async create(@Body() body: WalletCreationDTO): Promise<WalletDocument> {
 		return this.walletService.create(body);
 	}
 

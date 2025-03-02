@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { WalletFilterDTO } from '../dtos';
+import { WalletCreationDTO, WalletFilterDTO } from '../dtos';
 import { WalletRequestBody } from '../dtos/request';
 import { WalletRepository } from '../repositories';
 
@@ -16,7 +16,7 @@ export class WalletService {
 		return this.walletRepository.getWalletByDocumentId(id);
 	}
 
-	public async create(body: WalletRequestBody) {
+	public async create(body: WalletCreationDTO) {
 		return this.walletRepository.create(body);
 	}
 

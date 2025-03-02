@@ -1,7 +1,7 @@
 import { CollectionReference, Query, Timestamp } from '@google-cloud/firestore';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 
-import { getUniqueId, time } from '@/common/utils';
+import { getUniqueId } from '@/common/utils';
 
 import { WalletFilterDTO } from '../dtos';
 import { WalletDocument } from '../entities';
@@ -63,12 +63,11 @@ export class WalletRepository {
 	}
 
 	async create(
-		payload: Pick<WalletDocument, 'title'> & Partial<WalletDocument>,
+		payload: Pick<WalletDocument, 'name'> & Partial<WalletDocument>,
 	) {
 		const validPayload = this.getValidProperties(payload);
 		const document = this.collection.doc(validPayload.id);
 		await document.set(validPayload);
-
 		return validPayload;
 	}
 
@@ -79,14 +78,13 @@ export class WalletRepository {
 		},
 		newUpdatedAt = false,
 	) {
-		const dueDateMillis = time().valueOf();
+		const dueDateMillis = Date.now();
 		const createdAt = Timestamp.fromMillis(dueDateMillis);
 
 		return {
-			id: document.id || getUniqueId(),
-			title: document.title,
-			text: document.text ?? null,
-			imageUrl: document.imageUrl ?? null,
+			id: getUniqueId(),
+			name: document.name,
+			type: document.type ?? null,
 			isPublished: document.isPublished ?? false,
 			createdAt: document.createdAt ?? createdAt,
 			updatedAt: newUpdatedAt ? createdAt : (document.updatedAt ?? null),
