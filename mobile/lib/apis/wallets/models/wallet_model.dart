@@ -1,15 +1,24 @@
 class WalletModel {
-  String? title;
-	String? type;
-	bool? isPublished;
-	String? imageUrl;
+  String name;
+	String type;
+	int amount;
 
-  WalletModel({this.title, this.type, this.isPublished, this.imageUrl});
-
+  WalletModel({
+    required this.name, 
+    required this.type, 
+    required this.amount, 
+  });
   
   WalletModel.fromJson(Map<String, dynamic> json)
-      : title = json['title'],
+      : name = json['name'],
         type = json['type'],
-        isPublished = json['email'],
-        imageUrl = json['phone'];
+        amount = json['amount'] ?? 0;
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "type": type,
+      "amount": amount,
+    };
+  }
 }

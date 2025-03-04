@@ -6,6 +6,7 @@ export class WalletDocument {
 	id: string;
 	name: string;
 	type?: string | null;
+	amount: number;
 	createdAt?: Timestamp | null;
 	updatedAt?: Timestamp | null;
 }
