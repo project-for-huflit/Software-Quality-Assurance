@@ -7,29 +7,34 @@ import 'package:mobile/apis/wallets/models/wallet_model.dart';
 class WalletServices{
   Future<List<WalletModel>> listWallet() {
     return http
-        .get(WalletUrls().API_WALLET_LIST)
+        .get(walletUrls.API_WALLET_LIST)
         .then((http.Response response) {
       final String jsonBody = response.body;
       final int statusCode = response.statusCode;
  
       if(statusCode != 200){
         // ignore: avoid_print
-        print(response.reasonPhrase);
+        // print(response.reasonPhrase);
         throw Exception("Error load api");
       }
  
       const JsonDecoder decoder = JsonDecoder();
-      final useListContainer = decoder.convert(jsonBody);
-      final List walletList = useListContainer['results'];
-      return walletList.map((contactRaw) => WalletModel.fromJson(contactRaw)).toList();
+
+      final List<dynamic> walletList = decoder.convert(jsonBody); 
+      // ignore: avoid_print
+      // print(walletList);
+      return walletList.map((walletRaw) => WalletModel.fromJson(walletRaw)).toList();
     });
   }
 
-  createWallet(data) async {
+  Future<WalletModel?> createWallet(WalletModel wallet) async {
     return await http
       .post(
-        WalletUrls().API_CREATE_WALLET,
-        body: data,
+        walletUrls.API_CREATE_WALLET,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode(wallet.toJson()),
       )
       .then((http.Response response) {
         final String jsonBody = response.body;
@@ -37,24 +42,27 @@ class WalletServices{
 
         if(statusCode != 200){
           // ignore: avoid_print
-          print(response.reasonPhrase);
+          print("⚠️ Error: $statusCode - $jsonBody");
           throw Exception("Error load api");
         }
 
         const JsonDecoder decoder = JsonDecoder();
-        final useContainer = decoder.convert(jsonBody);
-        final String responseCreateWallet = useContainer['results'];
+
+        final dynamic responseCreateWallet = decoder.convert(jsonBody); 
+        // ignore: avoid_print
+        print(responseCreateWallet);
         return responseCreateWallet;
       }
-    );
+      ).catchError((e) {
+        // ignore: avoid_print
+        print("❌ Exception: $e");
+        return null;
+      });
   }
 
-  deleteWallet(data) async {
+  deleteWallet(id) async {
     return await http
-      .post(
-        WalletUrls().API_DELETE_WALLET,
-        body: data,
-      )
+      .post(walletUrls.API_DELETE_WALLET(id))
       .then((http.Response response) {
         final String jsonBody = response.body;
         final int statusCode = response.statusCode;

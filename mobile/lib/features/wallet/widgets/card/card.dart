@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/apis/wallets/models/wallet_model.dart';
 
-class CardWallet extends StatefulWidget {
-  const CardWallet({super.key});
+class CardWallet extends StatelessWidget {
+const CardWallet({ super.key, required this.wallet });
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _CardState createState() => _CardState();
-}
-
-class _CardState extends State<CardWallet> {
+final WalletModel wallet;
 
   @override
   Widget build(BuildContext context) {
     return _buildCreditCard(
         color: const Color(0xFF090943),
-        cardExpiration: "TPB xxxx 8944",
-        cardHolder: "TPB xxxx 8944",
-        cardNumber: "3546 7532 XXXX 9742");
+        cardExpiration: wallet.name,
+        cardHolder: wallet.type,
+        amountMoney: wallet.amount);
   }
 
-  Card _buildCreditCard(
-      {required Color color,
-      required String cardNumber,
-      required String cardHolder,
-      required String cardExpiration}) {
+  Card _buildCreditCard({
+    required Color color,
+    required String cardHolder,
+    required String cardExpiration,
+    required int amountMoney,
+  }) {
     return Card(
       elevation: 4.0,
       color: color,
@@ -49,7 +46,7 @@ class _CardState extends State<CardWallet> {
               ],
             ),
             Text(
-              cardNumber,
+              amountMoney.toString(),
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 21,
@@ -69,12 +66,18 @@ class _CardState extends State<CardWallet> {
         Text(
           label,
           style: const TextStyle(
-              color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
+            color: Colors.grey, 
+            fontSize: 12,
+            fontWeight: FontWeight.bold
+          ),
         ),
         Text(
           value,
           style: const TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            color: Colors.white, 
+            fontSize: 18, 
+            fontWeight: FontWeight.bold
+          ),
         )
       ],
     );
