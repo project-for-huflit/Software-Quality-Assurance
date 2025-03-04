@@ -1,4 +1,4 @@
-import { CollectionReference, Query, Timestamp } from '@google-cloud/firestore';
+import { CollectionReference, Timestamp } from '@google-cloud/firestore';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 
 import { getUniqueId } from '@/common/utils';
@@ -36,21 +36,22 @@ export class IncomeRepository {
 			return { doc, data: snapshot.data() };
 		}
 	}
-	
+
 	async find(): Promise<IncomeDocument[]> {
 		const list: IncomeDocument[] = [];
 
-		const incomeList = await  this.collection.get();
+		const incomeList = await this.collection.get();
 		incomeList.forEach((doc) => {
 			list.push(doc.data() as IncomeDocument);
 		});
+
 		return list;
 	}
-	
+
 	async create(
-		payload: Omit<IncomeDocument, 'id' > & { 
+		payload: Omit<IncomeDocument, 'id'> & {
 			id?: string;
-		}
+		},
 	) {
 		const validPayload = this.getValidProperties(payload);
 		const document = this.collection.doc(validPayload.id);
@@ -60,7 +61,7 @@ export class IncomeRepository {
 	}
 
 	public getValidProperties(
-		document: Omit<IncomeDocument, 'id' > & {
+		document: Omit<IncomeDocument, 'id'> & {
 			id?: string;
 		},
 		newUpdatedAt = false,
@@ -81,6 +82,7 @@ export class IncomeRepository {
 
 	public async deleteIncomeById(id: string) {
 		const doc = this.collection.doc(id);
+
 		return await doc.delete();
 	}
 }

@@ -3,6 +3,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile/features/transaction/presentation/bottom_sheet_cate.dart';
+import 'package:mobile/features/transaction/service/cate_income_service.dart';
+import 'package:mobile/features/transaction/service/gemini_service.dart';
 import 'package:mobile/features/transaction/widget/board_date_time_picker.dart';
 import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -21,6 +23,7 @@ class IncomeForm extends StatefulWidget {
 class _IncomeFormState extends State<IncomeForm> {
   File? _selectedImage;
   String _recognizedText = '';
+  final GeminiService _geminiService = GeminiService();
 
   Future<void> _handleImageSelected(File? image) async {
     if (image == null) return;
@@ -29,6 +32,11 @@ class _IncomeFormState extends State<IncomeForm> {
     final text = await TextRecognitionService.recognizeText(image);
     setState(() => _recognizedText = text);
     print('Dữ liệu OCR: $_recognizedText');
+    try {
+      await _geminiService.processText(_recognizedText, 'tiền chi');
+    } catch (e) {
+      print('Lỗi xử lý Gemini: $e');
+    }
   }
 
   @override
@@ -44,20 +52,33 @@ class _IncomeFormState extends State<IncomeForm> {
     'Cash', 'Bank', 'Credit Card', 'Create Account'
   ];
 
-  final List<Map<String, dynamic>> incomeCategories = [
-    {'name': 'Salary', 'icon': Icons.account_balance_wallet},
-    {'name': 'Investment', 'icon': Icons.trending_up},
-    {'name': 'Referral', 'icon': Icons.person},
-  ];
+  // late List<Map<String, dynamic>> incomeCategories = [
+  //   {'name': 'Salary', 'icon': Icons.money},
+  //   {'name': 'Gift', 'icon': Icons.card_giftcard},
+  // ];
+
+  late List<Map<String, dynamic>> incomeCategories = [];
 
   String? selectedValue;
   String? selectedCategory;
   String? selectedDate;
   String? selectedAccount;
 
+  void _fetchCategories() async {
+    try {
+      List<Map<String, dynamic>> categories = await CateIncomeService.fetchCategories();
+      setState(() {
+        incomeCategories = categories;
+      });
+    } catch (e) {
+      print('Lỗi tải danh mục: $e');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _fetchCategories();
     _amountController.addListener(() {
       final String text = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
       if (text.isNotEmpty) {
@@ -80,6 +101,7 @@ class _IncomeFormState extends State<IncomeForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  spacing: 16,
                   children: [
                     //CameraButton
                     Expanded(
@@ -94,7 +116,6 @@ class _IncomeFormState extends State<IncomeForm> {
                       ),
                     ),
                   ],
-                  spacing: 16,
                 ),
 
                 const SizedBox(height: 16),
@@ -129,6 +150,12 @@ class _IncomeFormState extends State<IncomeForm> {
                     ),
                     trailing: const Icon(Icons.keyboard_arrow_down),
                     onTap: () {
+                      if (incomeCategories.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Loading categories, please wait...')),
+                        );
+                        return;
+                      }
                       showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
@@ -143,6 +170,7 @@ class _IncomeFormState extends State<IncomeForm> {
                             maxChildSize: 0.9, // 90% chiều cao tối đa
                             builder: (context, scrollController) {
                               return BottomSheetCate(
+                                isIncome: true,
                                 categories: incomeCategories,
                                 onCategorySelected: (category) {
                                   setState(() {

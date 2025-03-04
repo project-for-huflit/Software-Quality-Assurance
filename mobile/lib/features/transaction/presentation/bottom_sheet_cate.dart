@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../widget/custom_search_bar.dart';
+import '../widget/dialog_add_cate.dart';
 
 class BottomSheetCate extends StatefulWidget {
   final Function(String category) onCategorySelected;
   final List<Map<String, dynamic>> categories;
+  final bool isIncome;
 
   const BottomSheetCate({
     super.key,
     required this.onCategorySelected,
     required this.categories,
+    required this.isIncome,
   });
 
   @override
@@ -24,7 +27,12 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
   @override
   void initState() {
     super.initState();
-    filteredCategories = widget.categories;
+    filteredCategories = widget.categories.map((category) {
+      return {
+        'name': category['name'],
+        'icon': category['icon'] is IconData ? category['icon'] : getCategoryIcon(category['name']),
+      };
+    }).toList();
   }
 
   void _filterCategories(String query) {
@@ -38,6 +46,46 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
             .toList();
       }
     });
+  }
+
+  IconData getCategoryIcon(String? categoryName) {
+    if (categoryName == null) return Icons.category;
+    switch (categoryName.toLowerCase()) {
+      case 'home':
+        return Icons.home;
+      case 'food':
+        return Icons.fastfood;
+      case 'shopping':
+        return Icons.shopping_cart;
+      case 'travel':
+        return Icons.flight;
+      case 'entertainment':
+        return Icons.movie;
+      case 'car':
+        return Icons.directions_car;
+      case 'health':
+        return Icons.local_hospital;
+      case 'gift':
+        return Icons.card_giftcard;
+      default:
+        return Icons.category;
+    }
+  }
+
+
+  void _showAddCategoryDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => DialogAddCate(
+        isIncome: widget.isIncome,
+        onCategoryAdded: (newCategory) {
+          setState(() {
+            widget.categories.add({'name': newCategory, 'icon': getCategoryIcon(newCategory)});
+            filteredCategories = List.from(widget.categories);
+          });
+        },
+      ),
+    );
   }
 
   @override
@@ -56,8 +104,24 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
               ),
-              itemCount: filteredCategories.length,
+              itemCount: filteredCategories.length + 1,
               itemBuilder: (context, index) {
+                if (index == filteredCategories.length) {
+                  return GestureDetector(
+                    onTap: () => _showAddCategoryDialog(context),
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.grey.shade200,
+                          child: const Icon(Icons.add, color: Colors.black, size: 24),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text("Thêm", style: TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                  );
+                }
                 final category = filteredCategories[index];
                 return GestureDetector(
                   onTap: () {

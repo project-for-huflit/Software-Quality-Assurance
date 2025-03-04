@@ -1,31 +1,24 @@
-// import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 
-// @Controller('cate_income')
-// export class Cate_incomeController {
-// 	constructor(private readonly cate ) {}
+import { CreateCateIncomeDto } from '@/modules/category/cate_income/dtos/create-cate-income.dto';
+import { Cate_incomeService } from '@/modules/category/cate_income/services/cate_income.service';
 
-// 	@Post()
-// 	create(@Body() createUserDto: ) {
-// 		return this.usersService.create(createUserDto);
-// 	}
+@Controller('cate-income')
+export class Cate_incomeController {
+	constructor(private readonly cateIncomeService: Cate_incomeService) {}
 
-// 	@Get()
-// 	findAll() {
-// 		return this.usersService.findAll();
-// 	}
+	@Post()
+	create(@Body() createCateIncomeDto: CreateCateIncomeDto) {
+		return this.cateIncomeService.create(createCateIncomeDto);
+	}
 
-// 	@Get(':id')
-// 	findOne(@Param('id') id: string) {
-// 		return this.usersService.findOne(id);
-// 	}
+	@Get()
+	findAll() {
+		return this.cateIncomeService.findAll();
+	}
 
-// 	@Patch()
-// 	update(@Body() updateUserDto: UpdateUserDto) {
-// 		return this.usersService.update(updateUserDto);
-// 	}
-
-// 	@Delete(':id')
-// 	remove(@Param('id') id: string) {
-// 		return this.usersService.remove(id);
-// 	}
-// }
+	@Delete(':id')
+	delete(@Param('id') id: string) {
+		return this.cateIncomeService.delete(id);
+	}
+}
