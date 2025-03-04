@@ -1,5 +1,5 @@
 import { TypeWallet } from '@/common/constants';
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsString } from 'class-validator';
 
 export class WalletCreationDTO {
     @IsString()
@@ -12,9 +12,12 @@ export class WalletCreationDTO {
         }
     )
     type: string | null;
+    @IsNumber()
+    amount: number;
 
-    constructor(name: string, type: string) {
+    constructor(name: string, type: string, amount: number) {
         this.name = name;
         this.type = type;
+        this.amount = amount;
     }
 }

@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:mobile/apis/wallets/models/wallet_model.dart';
+import 'package:mobile/apis/wallets/wallet_api.dart';
 import 'package:mobile/features/home/widgets/bottom_nav_bar.dart';
 import 'package:mobile/features/home/widgets/top_expense.dart';
 import 'package:mobile/features/wallet/widgets/card/card.dart';
@@ -20,18 +22,36 @@ class _ListWalletScreenState extends State<ListWalletScreen> {
     fontWeight: FontWeight.bold,
   );
 
+  @override
+  void initState() {
+    super.initState();
+    _fetchWallets();
+  }
+
   List<Widget> carouselItems = [
     Image.asset('assets/image1.png'),
     Image.asset('assets/image2.png'),
     Image.asset('assets/image3.png'),
   ];
 
-  List<Widget> walletItems = [
-    const CardWallet(),
-    const CardWallet(),
-    const CardCreateWallet(),
-  ];
+  List<Widget> walletItems = [];
 
+  Future<void> _fetchWallets() async {
+    try {
+      List<WalletModel> wallets = await WalletServices().listWallet(); 
+      // ignore: avoid_print
+      // print("Error for get list wallet: $wallets");
+      setState(() {
+        walletItems = [
+          ...wallets.map((wallet) => CardWallet(wallet: wallet)), 
+          const CardCreateWallet(),
+        ];
+      });
+    } catch (e) {
+      // ignore: avoid_print
+      print("Error for get list wallet: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,9 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 import { _PORT } from '../venv';
 
 export const corsOptions: CorsOptions = {
-	origin: [`http://localhost:${_PORT}`],
+	origin: [
+		'*'
+	],
 	methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
 	credentials: true,
 };

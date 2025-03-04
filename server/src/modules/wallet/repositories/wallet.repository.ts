@@ -41,7 +41,6 @@ export class WalletRepository {
 		const list: WalletDocument[] = [];
 
 		const walletList = await  this.collection.get();
-		// (doc: { data: () => WalletDocument; }) => list.push(doc.data());
 		walletList.forEach((doc) => {
 			list.push(doc.data() as WalletDocument);
 		});
@@ -49,7 +48,9 @@ export class WalletRepository {
 	}
 
 	async create(
-		payload: Pick<WalletDocument, 'name'> & Partial<WalletDocument>,
+		payload: Omit<WalletDocument, 'id'> & {
+			id?: string;
+		},
 	) {
 		const validPayload = this.getValidProperties(payload);
 		const document = this.collection.doc(validPayload.id);
@@ -70,6 +71,7 @@ export class WalletRepository {
 			id: getUniqueId(),
 			name: document.name,
 			type: document.type ?? null,
+			amount: document.amount ?? null,
 			createdAt: document.createdAt ?? createdAt,
 			updatedAt: newUpdatedAt ? createdAt : (document.updatedAt ?? null),
 		};
