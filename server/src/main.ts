@@ -20,7 +20,7 @@ async function bootstrap() {
 
 	setupSwagger(app);
 
-	setupFirebase(firebaseKeyFilePath);
+	setupFirebase(process.env.FIREBASE_KEY_FILE_PATH ?? '');
 
 	await app.listen(_PORT);
     console.log('Server start at port:: ', await app.getUrl());

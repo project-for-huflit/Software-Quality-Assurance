@@ -8,8 +8,8 @@ import { InvoiceRepository } from '../repositories';
 export class InvoiceService {
 	constructor(private readonly invoiceRepository: InvoiceRepository) {}
 
-	public async getList(filter: InvoiceFilterDTO) {
-		return this.invoiceRepository.find(filter);
+	public async getList() {
+		return this.invoiceRepository.find();
 	}
 
 	public async getItem(id: string) {

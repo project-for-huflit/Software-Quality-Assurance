@@ -27,7 +27,12 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
   @override
   void initState() {
     super.initState();
-    filteredCategories = widget.categories;
+    filteredCategories = widget.categories.map((category) {
+      return {
+        'name': category['name'],
+        'icon': category['icon'] is IconData ? category['icon'] : getCategoryIcon(category['name']),
+      };
+    }).toList();
   }
 
   void _filterCategories(String query) {
@@ -43,6 +48,31 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
     });
   }
 
+  IconData getCategoryIcon(String? categoryName) {
+    if (categoryName == null) return Icons.category;
+    switch (categoryName.toLowerCase()) {
+      case 'home':
+        return Icons.home;
+      case 'food':
+        return Icons.fastfood;
+      case 'shopping':
+        return Icons.shopping_cart;
+      case 'travel':
+        return Icons.flight;
+      case 'entertainment':
+        return Icons.movie;
+      case 'car':
+        return Icons.directions_car;
+      case 'health':
+        return Icons.local_hospital;
+      case 'gift':
+        return Icons.card_giftcard;
+      default:
+        return Icons.category;
+    }
+  }
+
+
   void _showAddCategoryDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -50,7 +80,7 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
         isIncome: widget.isIncome,
         onCategoryAdded: (newCategory) {
           setState(() {
-            widget.categories.add({'name': newCategory, 'icon': Icons.category});
+            widget.categories.add({'name': newCategory, 'icon': getCategoryIcon(newCategory)});
             filteredCategories = List.from(widget.categories);
           });
         },

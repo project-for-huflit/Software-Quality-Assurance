@@ -15,16 +15,15 @@ import { AccountRequestBody } from '@/modules/auth/dtos/request';
 
 import { WalletDocument } from '../entities';
 import { WalletService } from '../services';
+import { WalletCreationDTO } from '../dtos';
 
 @Controller('wallet')
 export class WalletController {
 	constructor(private readonly walletService: WalletService) {}
 
 	@Get('')
-	async getList(
-		@Query('isPublished', ParseBoolPipe) isPublished?: boolean,
-	): Promise<WalletDocument[]> {
-		const response = await this.walletService.getList({ isPublished });
+	async getList(): Promise<WalletDocument[]> {
+		const response = await this.walletService.getList();
 
 		if (!response?.length) {
 			throw new NotFoundException('Wallet is not exist');
@@ -45,7 +44,7 @@ export class WalletController {
 	}
 
 	@Post('/')
-	async create(@Body() body: AccountRequestBody): Promise<WalletDocument> {
+	async create(@Body() body: WalletCreationDTO): Promise<WalletDocument> {
 		return this.walletService.create(body);
 	}
 

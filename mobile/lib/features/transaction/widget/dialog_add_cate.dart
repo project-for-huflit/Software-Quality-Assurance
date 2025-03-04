@@ -23,6 +23,7 @@ class _DialogAddCateState extends State<DialogAddCate> {
 
   Future<void> _saveCategory() async {
     String name = _controller.text.trim();
+    print("Name: $name");
     if (name.isEmpty) return;
 
     setState(() {
@@ -31,8 +32,10 @@ class _DialogAddCateState extends State<DialogAddCate> {
 
     String baseUrl = dotenv.env['API_URL'] ?? "https://fallback-api.com/api";;
     String apiUrl = widget.isIncome
-        ? "$baseUrl/cate_income"
-        : "$baseUrl/cate_expense";
+        ? "$baseUrl/cate-income"
+        : "$baseUrl/cate-expense";
+
+    print("API URL: $apiUrl");
 
     try {
       final response = await http.post(
@@ -41,6 +44,7 @@ class _DialogAddCateState extends State<DialogAddCate> {
         body: jsonEncode({"name": name}),
       );
 
+
       if (response.statusCode == 201 || response.statusCode == 200) {
         widget.onCategoryAdded(name);
         Navigator.pop(context);
@@ -48,6 +52,7 @@ class _DialogAddCateState extends State<DialogAddCate> {
         _showError("Lỗi khi thêm danh mục!");
       }
     } catch (e) {
+      print("Error: $e");
       _showError("Lỗi kết nối server!");
     }
 

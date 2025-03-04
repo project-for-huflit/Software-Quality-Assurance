@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { WalletFilterDTO } from '../dtos';
+import { WalletCreationDTO, WalletFilterDTO } from '../dtos';
 import { WalletRequestBody } from '../dtos/request';
 import { WalletRepository } from '../repositories';
 
@@ -8,15 +8,15 @@ import { WalletRepository } from '../repositories';
 export class WalletService {
 	constructor(private readonly walletRepository: WalletRepository) {}
 
-	public async getList(filter: WalletFilterDTO) {
-		return this.walletRepository.find(filter);
+	public async getList() {
+		return this.walletRepository.find();
 	}
 
 	public async getItem(id: string) {
 		return this.walletRepository.getWalletByDocumentId(id);
 	}
 
-	public async create(body: WalletRequestBody) {
+	public async create(body: WalletCreationDTO) {
 		return this.walletRepository.create(body);
 	}
 
@@ -42,7 +42,6 @@ export class WalletService {
 		// 	| 'title'
 		// 	| 'text'
 		// 	| 'imageUrl'
-		// 	| 'isPublished'
 		// 	| 'createdAt'
 		// 	| 'updatedAt';
 
@@ -70,15 +69,12 @@ export class WalletService {
 			throw new NotFoundException('Example document does not exist');
 		}
 
-		const newPublishedState = !data?.isPublished;
-
 		const response = this.walletRepository.getValidProperties(
-			{ ...data, isPublished: newPublishedState },
+			{ ...data },
 			true,
 		);
 
 		await doc.update({
-			isPublished: newPublishedState,
 			updatedAt: response?.updatedAt,
 		});
 

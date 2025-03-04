@@ -4,10 +4,8 @@ export class WalletDocument {
 	static collectionName = 'wallet';
 
 	id: string;
-	title: string;
-	text?: string | null;
-	isPublished: boolean;
-	imageUrl?: string | null;
+	name: string;
+	type?: string | null;
 	createdAt?: Timestamp | null;
 	updatedAt?: Timestamp | null;
 }

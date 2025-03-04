@@ -32,10 +32,12 @@ class _ExpenseFormState extends State<ExpenseForm> {
   final List<String> accountItems = [
     'Cash', 'Bank', 'Credit Card', 'Create Account'
   ];
-  final List<Map<String, dynamic>> expenseCategories = [
-    {'name': 'Gym', 'icon': Icons.sports_gymnastics},
-    {'name': 'Shopping', 'icon': Icons.person},
-  ];
+  // final List<Map<String, dynamic>> expenseCategories = [
+  //   {'name': 'Gym', 'icon': Icons.sports_gymnastics},
+  //   {'name': 'Shopping', 'icon': Icons.person},
+  // ];
+
+  late List<Map<String, dynamic>> expenseCategories = [];
 
   String? selectedValue;
   String? selectedCategory;

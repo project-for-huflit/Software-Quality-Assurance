@@ -52,10 +52,12 @@ class _IncomeFormState extends State<IncomeForm> {
     'Cash', 'Bank', 'Credit Card', 'Create Account'
   ];
 
-  late List<Map<String, dynamic>> incomeCategories = [
-    {'name': 'Salary', 'icon': Icons.money},
-    {'name': 'Gift', 'icon': Icons.card_giftcard},
-  ];
+  // late List<Map<String, dynamic>> incomeCategories = [
+  //   {'name': 'Salary', 'icon': Icons.money},
+  //   {'name': 'Gift', 'icon': Icons.card_giftcard},
+  // ];
+
+  late List<Map<String, dynamic>> incomeCategories = [];
 
   String? selectedValue;
   String? selectedCategory;
