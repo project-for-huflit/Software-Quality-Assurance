@@ -46,4 +46,22 @@ export class Cate_incomeService {
 		const snapshot = await this.collection.get();
 		const documents = snapshot.docs.map((doc) => doc.data());
 
+		return {
+			message: 'Lấy danh sách danh mục chi thành công!',
+			data: documents,
+		};
+	}
+
+	public async delete(id: string) {
+		const nameRef = this.collection.doc(id);
+		const res = await nameRef.get();
+
+		if (!res.exists) {
+			throw new BadRequestException('Danh mục chi không tồn tại!');
+		}
+
+		await nameRef.delete();
+
+		return { message: 'Xóa danh mục chi thành công!' };
+	}
 }

@@ -1,7 +1,8 @@
-import { CollectionReference, Query, Timestamp } from '@google-cloud/firestore';
+import { CollectionReference, Timestamp } from '@google-cloud/firestore';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { getUniqueId, time } from '@/common/utils';
-import { IncomeFilterDTO } from '../dtos';
+
+import { getUniqueId } from '@/common/utils';
+
 import { IncomeDocument } from '../entities';
 
 @Injectable()
@@ -36,34 +37,20 @@ export class IncomeRepository {
 		}
 	}
 
-	private findGenerator(filter: IncomeFilterDTO) {
-		const collectionRef = this.collection;
-		let query: Query<IncomeDocument> = collectionRef;
-
-		if (typeof filter?.isPublished === 'boolean') {
-			query = query.where('isPublished', '==', filter.isPublished);
-		}
-
-		return query;
-	}
-
-	async find(filter: IncomeFilterDTO): Promise<IncomeDocument[]> {
+	async find(): Promise<IncomeDocument[]> {
 		const list: IncomeDocument[] = [];
-		let query = this.findGenerator(filter);
 
-		query = query.orderBy('createdAt', 'desc');
-
-		const snapshot = await query.get();
-
-		snapshot.forEach((doc) => list.push(doc.data()));
+		const incomeList = await this.collection.get();
+		incomeList.forEach((doc) => {
+			list.push(doc.data() as IncomeDocument);
+		});
 
 		return list;
 	}
 
 	async create(
-		payload: Omit<IncomeDocument, 'id' | 'isPublished'> & {
+		payload: Omit<IncomeDocument, 'id'> & {
 			id?: string;
-			isPublished?: boolean | null;
 		},
 	) {
 		const validPayload = this.getValidProperties(payload);
@@ -74,20 +61,18 @@ export class IncomeRepository {
 	}
 
 	public getValidProperties(
-		document: Omit<IncomeDocument, 'id' | 'isPublished'> & {
+		document: Omit<IncomeDocument, 'id'> & {
 			id?: string;
-			isPublished?: boolean | null;
 		},
 		newUpdatedAt = false,
 	) {
-		const dueDateMillis = time().valueOf();
+		const dueDateMillis = Date.now();
 		const createdAt = Timestamp.fromMillis(dueDateMillis);
 
 		return {
 			id: getUniqueId(),
 			amount: document.amount ?? null,
 			category: document.category ?? null,
-			isPublished: document.isPublished ?? false,
 			imageUrl: document.imageUrl ?? null,
 			incomeAt: document.incomeAt ?? null,
 			createdAt: document.createdAt ?? createdAt,
@@ -97,6 +82,7 @@ export class IncomeRepository {
 
 	public async deleteIncomeById(id: string) {
 		const doc = this.collection.doc(id);
+
 		return await doc.delete();
 	}
 }
