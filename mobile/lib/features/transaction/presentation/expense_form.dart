@@ -68,9 +68,11 @@ class _ExpenseFormState extends State<ExpenseForm> {
   String? selectedDate;
   String? selectedAccount;
 
+  final CateExpenseService _categoryService = CateExpenseService();
+
   void _fetchCategories() async {
     try {
-      List<Map<String, dynamic>> categories = await CateExpenseService.fetchCategories();
+      List<Map<String, dynamic>> categories = await _categoryService.fetchCategories();
       setState(() {
         expenseCategories = categories;
       });
@@ -206,79 +208,79 @@ class _ExpenseFormState extends State<ExpenseForm> {
                       ),
                       const SizedBox(height: 16),
                       // Category show modal
-                      FormField<String>(
-                        validator: (value) {
-                          if (selectedCategory == null) {
-                            return 'Vui lòng chọn danh mục';
-                          }
-                          return null;
-                        },
-                        builder: (FormFieldState<String> field) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: field.hasError ? Colors.red : Colors.black54, // 🔴 Hiển thị viền đỏ nếu có lỗi
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: ListTile(
-                                  title: Text(
-                                    selectedCategory ?? 'Select Category',
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                  trailing: const Icon(Icons.keyboard_arrow_down),
-                                  onTap: () {
-                                    if (expenseCategories.isEmpty) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('Loading categories, please wait...')),
-                                      );
-                                      return;
-                                    }
-                                    showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      context: context,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                                      ),
-                                      builder: (context) {
-                                        return DraggableScrollableSheet(
-                                          expand: false,
-                                          initialChildSize: 0.8,
-                                          minChildSize: 0.4,
-                                          maxChildSize: 0.9,
-                                          builder: (context, scrollController) {
-                                            return BottomSheetCate(
-                                              isIncome: true,
-                                              categories: expenseCategories,
-                                              onCategorySelected: (category) {
-                                                setState(() {
-                                                  selectedCategory = category;
-                                                  field.didChange(category); // 🔴 Cập nhật trạng thái validator
-                                                });
-                                              },
-                                            );
-                                          },
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                              if (field.hasError) // 🔴 Hiển thị lỗi bên dưới ListTile nếu có
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 16, top: 4),
-                                  child: Text(
-                                    field.errorText!,
-                                    style: const TextStyle(color: Colors.red, fontSize: 12),
-                                  ),
-                                ),
-                            ],
-                          );
-                        },
-                      ),
+                      // FormField<String>(
+                      //   validator: (value) {
+                      //     if (selectedCategory == null) {
+                      //       return 'Vui lòng chọn danh mục';
+                      //     }
+                      //     return null;
+                      //   },
+                      //   builder: (FormFieldState<String> field) {
+                      //     return Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       children: [
+                      //         Container(
+                      //           decoration: BoxDecoration(
+                      //             border: Border.all(
+                      //               color: field.hasError ? Colors.red : Colors.black54, // 🔴 Hiển thị viền đỏ nếu có lỗi
+                      //             ),
+                      //             borderRadius: BorderRadius.circular(16),
+                      //           ),
+                      //           child: ListTile(
+                      //             title: Text(
+                      //               selectedCategory ?? 'Select Category',
+                      //               style: const TextStyle(fontSize: 16),
+                      //             ),
+                      //             trailing: const Icon(Icons.keyboard_arrow_down),
+                      //             onTap: () {
+                      //               if (expenseCategories.isEmpty) {
+                      //                 ScaffoldMessenger.of(context).showSnackBar(
+                      //                   const SnackBar(content: Text('Loading categories, please wait...')),
+                      //                 );
+                      //                 return;
+                      //               }
+                      //               showModalBottomSheet(
+                      //                 isScrollControlled: true,
+                      //                 context: context,
+                      //                 shape: const RoundedRectangleBorder(
+                      //                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      //                 ),
+                      //                 builder: (context) {
+                      //                   return DraggableScrollableSheet(
+                      //                     expand: false,
+                      //                     initialChildSize: 0.8,
+                      //                     minChildSize: 0.4,
+                      //                     maxChildSize: 0.9,
+                      //                     builder: (context, scrollController) {
+                      //                       return BottomSheetCate(
+                      //                         isIncome: true,
+                      //                         categories: expenseCategories,
+                      //                         onCategorySelected: (category) {
+                      //                           setState(() {
+                      //                             selectedCategory = category;
+                      //                             field.didChange(category); // 🔴 Cập nhật trạng thái validator
+                      //                           });
+                      //                         },
+                      //                       );
+                      //                     },
+                      //                   );
+                      //                 },
+                      //               );
+                      //             },
+                      //           ),
+                      //         ),
+                      //         if (field.hasError) // 🔴 Hiển thị lỗi bên dưới ListTile nếu có
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 16, top: 4),
+                      //             child: Text(
+                      //               field.errorText!,
+                      //               style: const TextStyle(color: Colors.red, fontSize: 12),
+                      //             ),
+                      //           ),
+                      //       ],
+                      //     );
+                      //   },
+                      // ),
 
                       const SizedBox(height: 16),
 

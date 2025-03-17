@@ -51,6 +51,8 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
   IconData getCategoryIcon(String? categoryName) {
     if (categoryName == null) return Icons.category;
     switch (categoryName.toLowerCase()) {
+      case 'salary':
+        return Icons.attach_money;
       case 'home':
         return Icons.home;
       case 'food':

@@ -57,11 +57,6 @@ class _IncomeFormState extends State<IncomeForm> {
 
   late List<String> accountItems = [];
 
-  // late List<Map<String, dynamic>> incomeCategories = [
-  //   {'name': 'Salary', 'icon': Icons.money},
-  //   {'name': 'Gift', 'icon': Icons.card_giftcard},
-  // ];
-
   late List<Map<String, dynamic>> incomeCategories = [];
 
   String? selectedValue;
@@ -69,12 +64,16 @@ class _IncomeFormState extends State<IncomeForm> {
   String? selectedDate;
   String? selectedAccount;
 
+  final CateIncomeService _categoryService = CateIncomeService();
+
   void _fetchCategories() async {
     try {
-      List<Map<String, dynamic>> categories = await CateIncomeService.fetchCategories();
+      List<Map<String, dynamic>> categories = await _categoryService.fetchCategories();
+
       setState(() {
         incomeCategories = categories;
       });
+      print("✅ Categories Loaded: $incomeCategories");
     } catch (e) {
       print('Lỗi tải danh mục: $e');
     }
@@ -221,12 +220,6 @@ class _IncomeFormState extends State<IncomeForm> {
                                 ),
                                 trailing: const Icon(Icons.keyboard_arrow_down),
                                 onTap: () {
-                                  if (incomeCategories.isEmpty) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Loading categories, please wait...')),
-                                    );
-                                    return;
-                                  }
                                   showModalBottomSheet(
                                     isScrollControlled: true,
                                     context: context,

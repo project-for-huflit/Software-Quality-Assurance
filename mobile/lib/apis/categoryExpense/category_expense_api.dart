@@ -1,13 +1,16 @@
 import 'dart:convert';
-
-import 'package:mobile/apis/expense/constants/expense_url.dart';
-import 'package:mobile/apis/expense/models/expense_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile/apis/categoryExpense/constant/category_expense_url.dart';
+import 'package:mobile/apis/categoryExpense/model/category_expense_model.dart';
+import 'package:mobile/apis/categoryIncome/constant/category_income_url.dart';
+import 'package:mobile/apis/categoryIncome/model/category_income_model.dart';
+import 'package:mobile/apis/wallets/constants/wallet_url.dart';
+import 'package:mobile/apis/wallets/models/wallet_model.dart';
 
-class ExpenseServices{
-  Future<List<ExpenseModel>> listExpense() {
+class CateExpenseServices{
+  Future<List<CategoryExpenseModel>> listCateExpense() {
     return http
-        .get(expenseUrls.API_EXPENSE_LIST)
+        .get(categoryExpenseUrls.API_CATEGORY_EXPENSE_LIST)
         .then((http.Response response) {
       final String jsonBody = response.body;
       final int statusCode = response.statusCode;
@@ -20,21 +23,21 @@ class ExpenseServices{
 
       const JsonDecoder decoder = JsonDecoder();
 
-      final List<dynamic> expenseList = decoder.convert(jsonBody);
+      final List<dynamic> cateExpenseList = decoder.convert(jsonBody);
       // ignore: avoid_print
       // print(walletList);
-      return expenseList.map((expenseRaw) => ExpenseModel.formJson(expenseRaw)).toList();
+      return cateExpenseList.map((cateExpenseRaw) => CategoryExpenseModel.formJson(cateExpenseRaw)).toList();
     });
   }
 
-  Future<ExpenseModel?> createExpense(ExpenseModel expense) async {
+  Future<CategoryExpenseModel?> createCateIncome(CategoryExpenseModel category) async {
     return await http
         .post(
-      expenseUrls.API_CREATE_EXPENSE,
+      categoryExpenseUrls.API_CREATE_CATEGORY_EXPENSE,
       headers: {
         "Content-Type": "application/json",
       },
-      body: jsonEncode(expense.toJson()),
+      body: jsonEncode(category.toJson()),
     )
         .then((http.Response response) {
       final String jsonBody = response.body;
@@ -48,10 +51,10 @@ class ExpenseServices{
 
       const JsonDecoder decoder = JsonDecoder();
 
-      final dynamic responseCreateExpense = decoder.convert(jsonBody);
+      final dynamic responseCreateCateIncome = decoder.convert(jsonBody);
       // ignore: avoid_print
-      print(responseCreateExpense);
-      return responseCreateExpense;
+      print(responseCreateCateIncome);
+      return responseCreateCateIncome;
     }
     ).catchError((e) {
       // ignore: avoid_print
@@ -60,9 +63,9 @@ class ExpenseServices{
     });
   }
 
-  deleteExpense(id) async {
+  deleteCateExpense(id) async {
     return await http
-        .post(expenseUrls.API_DELETE_EXPENSE(id))
+        .post(categoryExpenseUrls.API_DELETE_CATE_EXPENSE(id))
         .then((http.Response response) {
       final String jsonBody = response.body;
       final int statusCode = response.statusCode;
@@ -75,8 +78,8 @@ class ExpenseServices{
 
       const JsonDecoder decoder = JsonDecoder();
       final useContainer = decoder.convert(jsonBody);
-      final String responseCreateExpense = useContainer['results'];
-      return responseCreateExpense;
+      final String responseCreateCateExpense = useContainer['results'];
+      return responseCreateCateExpense;
     }
     );
   }
