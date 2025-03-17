@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mobile/apis/categoryIncome/constant/category_income_url.dart';
 import 'package:mobile/apis/categoryIncome/model/category_income_model.dart';
-import 'package:mobile/apis/wallets/constants/wallet_url.dart';
-import 'package:mobile/apis/wallets/models/wallet_model.dart';
 
 class CateIncomeServices{
   Future<List<CategoryIncomeModel>> listCateIncome() {
@@ -21,14 +19,14 @@ class CateIncomeServices{
 
       const JsonDecoder decoder = JsonDecoder();
 
-      final List<dynamic> cateIncomeList = decoder.convert(jsonBody);
-      // ignore: avoid_print
+      final Map<String, dynamic> decodedJson = decoder.convert(jsonBody);
+      final List<dynamic> cateIncomeList = decodedJson['data'];      // ignore: avoid_print
       // print(walletList);
       return cateIncomeList.map((cateIncomeRaw) => CategoryIncomeModel.formJson(cateIncomeRaw)).toList();
     });
   }
 
-  Future<WalletModel?> createCateIncome(CategoryIncomeModel category) async {
+  Future<CategoryIncomeModel?> createCateIncome(CategoryIncomeModel category) async {
     return await http
         .post(
       categoryIncomeUrls.API_CREATE_CATEGORY_INCOME,
@@ -41,7 +39,7 @@ class CateIncomeServices{
       final String jsonBody = response.body;
       final int statusCode = response.statusCode;
 
-      if(statusCode != 200){
+      if(statusCode != 200 && statusCode != 201){
         // ignore: avoid_print
         print("⚠️ Error: $statusCode - $jsonBody");
         throw Exception("Error load api");

@@ -5,7 +5,7 @@ import '../widget/dialog_add_cate.dart';
 
 class BottomSheetCate extends StatefulWidget {
   final Function(String category) onCategorySelected;
-  final List<Map<String, dynamic>> categories;
+  final List<String> categories;
   final bool isIncome;
 
   const BottomSheetCate({
@@ -27,10 +27,10 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
   @override
   void initState() {
     super.initState();
-    filteredCategories = widget.categories.map((category) {
+    filteredCategories = widget.categories.map((categoryName) {
       return {
-        'name': category['name'],
-        'icon': category['icon'] is IconData ? category['icon'] : getCategoryIcon(category['name']),
+        'name': categoryName,
+        'icon': getCategoryIcon(categoryName),
       };
     }).toList();
   }
@@ -38,11 +38,20 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
   void _filterCategories(String query) {
     setState(() {
       if (query.isEmpty) {
-        filteredCategories = widget.categories;
+        filteredCategories = widget.categories.map((categoryName) {
+          return {
+            'name': categoryName,
+            'icon': getCategoryIcon(categoryName),
+          };
+        }).toList();
       } else {
         filteredCategories = widget.categories
-            .where((category) =>
-            category['name'].toLowerCase().contains(query.toLowerCase()))
+            .where((categoryName) =>
+            categoryName.toLowerCase().contains(query.toLowerCase()))
+            .map((categoryName) => {
+          'name': categoryName,
+          'icon': getCategoryIcon(categoryName),
+        })
             .toList();
       }
     });
@@ -82,8 +91,11 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
         isIncome: widget.isIncome,
         onCategoryAdded: (newCategory) {
           setState(() {
-            widget.categories.add({'name': newCategory, 'icon': getCategoryIcon(newCategory)});
-            filteredCategories = List.from(widget.categories);
+            widget.categories.add(newCategory);
+            filteredCategories.add(<String, Object>{
+              'name': newCategory,
+              'icon': getCategoryIcon(newCategory) as Object,
+            });
           });
         },
       ),

@@ -1,6 +1,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile/apis/categoryIncome/category_income_api.dart';
+import 'package:mobile/apis/categoryIncome/model/category_income_model.dart';
 import 'package:mobile/features/transaction/presentation/bottom_sheet_cate.dart';
 import 'package:mobile/features/transaction/presentation/income_form.dart';
 import 'package:mobile/features/transaction/widget/board_date_time_picker.dart';
@@ -9,12 +11,11 @@ import 'package:mobile/features/transaction/widget/camera_button.dart';
 import 'package:mobile/features/transaction/widget/custom_search_bar.dart';
 import 'package:mobile/features/transaction/widget/gallery_button.dart';
 import 'package:mobile/features/transaction/widget/recurring_payment.dart';
-import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mobile/apis/income/income_api.dart';
 import 'package:mobile/apis/wallets/wallet_api.dart';
-import 'package:mobile/features/transaction/service/cate_income_service.dart';
 import 'package:mobile/features/transaction/service/gemini_service.dart';
+import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'income_form_test.mocks.dart';
@@ -22,31 +23,21 @@ import 'income_form_test.mocks.dart';
 @GenerateMocks([
   IncomeServices,
   WalletServices,
-  CateIncomeService,
+  CateIncomeServices,
   GeminiService,
 ])
 void main() {
   late MockIncomeServices mockIncomeService;
   late MockWalletServices mockWalletService;
-  late MockCateIncomeService mockCateIncomeService;
+  late MockCateIncomeServices mockCateIncomeService;
   late MockGeminiService mockGeminiService;
 
   setUp(() async{
     await dotenv.load();
     mockIncomeService = MockIncomeServices();
     mockWalletService = MockWalletServices();
-    mockCateIncomeService = MockCateIncomeService();
+    mockCateIncomeService = MockCateIncomeServices();
     mockGeminiService = MockGeminiService();
-
-    when(mockCateIncomeService.fetchCategories()).thenAnswer((_) async => [
-      {
-        'id': '123',
-        'name': 'Salary',
-        'createdAt': {'_seconds': 1740636154, '_nanoseconds': 171000000},
-        'updatedAt': {'_seconds': 1740636154, '_nanoseconds': 171000000}
-      },
-    ]);
-
   });
 
   Widget createScreen() {
@@ -54,7 +45,7 @@ void main() {
       providers: [
         Provider<IncomeServices>.value(value: mockIncomeService),
         Provider<WalletServices>.value(value: mockWalletService),
-        Provider<CateIncomeService>.value(value: mockCateIncomeService),
+        Provider<CateIncomeServices>.value(value: mockCateIncomeService),
         Provider<GeminiService>.value(value: mockGeminiService),
       ],
       child: const MaterialApp(
@@ -89,16 +80,14 @@ void main() {
   });
 
   testWidgets('Selecting category updates UI and calls API', (WidgetTester tester) async {
-    when(mockCateIncomeService.fetchCategories()).thenAnswer((_) async => [
-      {
-        'id': '123',
-        'name': 'Salary',
-        'createdAt': {'_seconds': 1740636154, '_nanoseconds': 171000000},
-        'updatedAt': {'_seconds': 1740636154, '_nanoseconds': 171000000}
-      },
+    when(mockCateIncomeService.listCateIncome()).thenAnswer((_) async => [
+      CategoryIncomeModel(name: 'Salary'),
+      CategoryIncomeModel(name: 'Investments'),
+      CategoryIncomeModel(name: 'Freelance'),
     ]);
 
     await tester.pumpWidget(createScreen());
+    await tester.pumpAndSettle();
 
     // Mở BottomSheet chọn danh mục
     await tester.tap(find.text('Select Category'));

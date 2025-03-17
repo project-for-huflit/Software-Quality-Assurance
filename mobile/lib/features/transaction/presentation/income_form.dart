@@ -5,13 +5,15 @@ import 'package:flutter/services.dart';
 import 'package:mobile/apis/income/income_api.dart';
 import 'package:mobile/apis/income/models/income_model.dart';
 import 'package:mobile/features/transaction/presentation/bottom_sheet_cate.dart';
-import 'package:mobile/features/transaction/service/cate_income_service.dart';
 import 'package:mobile/features/transaction/service/gemini_service.dart';
 import 'package:mobile/features/transaction/widget/board_date_time_picker.dart';
 import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/features/transaction/widget/camera_button.dart';
 import 'package:mobile/features/transaction/widget/recurring_payment.dart';
+import 'package:provider/provider.dart';
+import '../../../apis/categoryIncome/category_income_api.dart';
+import '../../../apis/categoryIncome/model/category_income_model.dart';
 import '../../../apis/wallets/models/wallet_model.dart';
 import '../../../apis/wallets/wallet_api.dart';
 import '../widget/button_confirm.dart';
@@ -57,23 +59,20 @@ class _IncomeFormState extends State<IncomeForm> {
 
   late List<String> accountItems = [];
 
-  late List<Map<String, dynamic>> incomeCategories = [];
+  late List<String> incomeCategories = [];
 
   String? selectedValue;
   String? selectedCategory;
   String? selectedDate;
   String? selectedAccount;
 
-  final CateIncomeService _categoryService = CateIncomeService();
-
-  void _fetchCategories() async {
+  Future<void> _fetchCategories() async {
+    // final cateIncomeService = Provider.of<CateIncomeServices>(context, listen: false);
     try {
-      List<Map<String, dynamic>> categories = await _categoryService.fetchCategories();
-
+      List<CategoryIncomeModel> categories = await CateIncomeServices().listCateIncome();
       setState(() {
-        incomeCategories = categories;
+        incomeCategories = categories.map((category) => category.name).toList();
       });
-      print("✅ Categories Loaded: $incomeCategories");
     } catch (e) {
       print('Lỗi tải danh mục: $e');
     }

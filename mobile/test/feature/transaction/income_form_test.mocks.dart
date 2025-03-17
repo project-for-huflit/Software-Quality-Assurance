@@ -5,13 +5,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
+import 'package:mobile/apis/categoryIncome/category_income_api.dart' as _i7;
+import 'package:mobile/apis/categoryIncome/model/category_income_model.dart'
+    as _i8;
 import 'package:mobile/apis/income/income_api.dart' as _i2;
 import 'package:mobile/apis/income/models/income_model.dart' as _i4;
 import 'package:mobile/apis/wallets/models/wallet_model.dart' as _i6;
 import 'package:mobile/apis/wallets/wallet_api.dart' as _i5;
-import 'package:mobile/features/transaction/service/cate_income_service.dart'
-    as _i7;
-import 'package:mobile/features/transaction/service/gemini_service.dart' as _i8;
+import 'package:mobile/features/transaction/service/gemini_service.dart' as _i9;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -82,29 +83,40 @@ class MockWalletServices extends _i1.Mock implements _i5.WalletServices {
           as _i3.Future<_i6.WalletModel?>);
 }
 
-/// A class which mocks [CateIncomeService].
+/// A class which mocks [CateIncomeServices].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCateIncomeService extends _i1.Mock implements _i7.CateIncomeService {
-  MockCateIncomeService() {
+class MockCateIncomeServices extends _i1.Mock
+    implements _i7.CateIncomeServices {
+  MockCateIncomeServices() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<List<Map<String, dynamic>>> fetchCategories() =>
+  _i3.Future<List<_i8.CategoryIncomeModel>> listCateIncome() =>
       (super.noSuchMethod(
-            Invocation.method(#fetchCategories, []),
-            returnValue: _i3.Future<List<Map<String, dynamic>>>.value(
-              <Map<String, dynamic>>[],
+            Invocation.method(#listCateIncome, []),
+            returnValue: _i3.Future<List<_i8.CategoryIncomeModel>>.value(
+              <_i8.CategoryIncomeModel>[],
             ),
           )
-          as _i3.Future<List<Map<String, dynamic>>>);
+          as _i3.Future<List<_i8.CategoryIncomeModel>>);
+
+  @override
+  _i3.Future<_i8.CategoryIncomeModel?> createCateIncome(
+    _i8.CategoryIncomeModel? category,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#createCateIncome, [category]),
+            returnValue: _i3.Future<_i8.CategoryIncomeModel?>.value(),
+          )
+          as _i3.Future<_i8.CategoryIncomeModel?>);
 }
 
 /// A class which mocks [GeminiService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGeminiService extends _i1.Mock implements _i8.GeminiService {
+class MockGeminiService extends _i1.Mock implements _i9.GeminiService {
   MockGeminiService() {
     _i1.throwOnMissingStub(this);
   }
