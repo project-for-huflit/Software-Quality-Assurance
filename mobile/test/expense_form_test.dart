@@ -42,7 +42,7 @@ void main() {
 
       // Assert
       expect(find.text('500'), findsOneWidget);
-    });
+    }); 
 
     testWidgets('should open category bottom sheet when tapping on "Select Category"', (WidgetTester tester) async {
       // Arrange

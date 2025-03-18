@@ -16,7 +16,6 @@ class SuccessResponse {
 		reasonStatusCode = ReasonPhrases.OK,
 		metadata = {},
 	}: ISuccessResponse) {
-		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		(this.message = message ?? reasonStatusCode), (this.status = status);
 		this.metadata = metadata;
 	}

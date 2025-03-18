@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@casl/ability": "^6.7.2",
+    "@golevelup/ts-jest": "^0.6.2",
     "@google-cloud/firestore": "^7.11.0",
     "@google-cloud/vision": "^4.3.2",
     "@nestjs/cache-manager": "^3.0.0",

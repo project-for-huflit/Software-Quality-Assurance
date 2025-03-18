@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../__mock__/data.dart' as data;
+// import '../../../../__mock__/data.dart' as data;
 
 class ReplyListView extends StatelessWidget {
   const ReplyListView({super.key});
@@ -12,11 +12,11 @@ class ReplyListView extends StatelessWidget {
       child: ListView(
         children: [
           const SizedBox(height: 8),
-          ...List.generate(data.replies.length, (index) {
-            return const Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-            );
-          }),
+          // ...List.generate(data.replies.length, (index) {
+          //   return const Padding(
+          //     padding: EdgeInsets.only(bottom: 8.0),
+          //   );
+          // }),
         ],
       ),
     );
