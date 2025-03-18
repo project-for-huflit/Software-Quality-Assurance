@@ -6,9 +6,11 @@ class BoardDateTimePicker extends StatelessWidget {
     super.key,
     required this.pickerType,
     this.customCloseButtonBuilder,
+    this.onDateSelected, // Thêm callback khi chọn ngày
   });
-  final DateTimePickerType pickerType;
 
+  final DateTimePickerType pickerType;
+  final Function(DateTime)? onDateSelected; // Callback khi chọn ngày
   final Widget Function(
       BuildContext context,
       bool isModal,
@@ -38,13 +40,13 @@ class BoardDateTimePicker extends StatelessWidget {
               )
                   : null,
             ),
-            // Specify if you want changes in the picker to take effect immediately.
             valueNotifier: date,
             controller: controller,
             customCloseButtonBuilder: customCloseButtonBuilder,
           );
           if (result != null) {
             date.value = result;
+            onDateSelected!(result); // Gọi callback để cập nhật `selectedDate`
             print('result: $result');
           }
         },
@@ -74,6 +76,7 @@ class BoardDateTimePicker extends StatelessWidget {
     );
   }
 }
+
 
 extension DateTimePickerTypeExtension on DateTimePickerType {
   String get title {

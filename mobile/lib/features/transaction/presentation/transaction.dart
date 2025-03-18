@@ -56,17 +56,7 @@ class _TransactionState extends State<Transaction> {
                   ),
                 ),
               ),
-              Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ButtonConfirm(
-                    onPressed: () {
-                      // Xử lý xác nhận giao dịch
-                    },
-                  ),
-                ),
-              ),
+
             ],
           ),
         ),

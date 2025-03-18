@@ -1,10 +1,24 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile/apis/income/income_api.dart';
+import 'package:mobile/apis/wallets/wallet_api.dart';
+import 'package:mobile/apis/categoryExpense/category_expense_api.dart';
 import 'package:mobile/features/transaction/presentation/expense_form.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/features/transaction/service/gemini_service.dart';
 import 'package:mobile/features/transaction/widget/board_date_time_picker.dart';
+import 'package:mockito/annotations.dart';
 
+@GenerateMocks([
+  IncomeServices,
+  WalletServices,
+  CateExpenseServices,
+  GeminiService,
+])
 void main() {
+
+
+
   group('ExpenseForm Widget Test', () {
     testWidgets('should render all components of the ExpenseForm', (WidgetTester tester) async {
       // Arrange
