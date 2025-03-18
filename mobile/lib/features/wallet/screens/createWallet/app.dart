@@ -81,6 +81,7 @@ class _CreateWalletScreenState extends State<CreateWalletScreen> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: TextFormField(
+                            key: const Key('nameField'),
                             controller: _nameController,
                             textAlignVertical: TextAlignVertical.center,
                             decoration: InputDecoration(
@@ -142,6 +143,7 @@ class _CreateWalletScreenState extends State<CreateWalletScreen> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: TextFormField(
+                            key: const Key('amountField'),
                             controller: _amountController,
                             keyboardType: TextInputType.number,
                             textAlignVertical: TextAlignVertical.center,
