@@ -47,7 +47,7 @@ class FirebaseOptionsMacos {
 }
 
 class BaseConstants {
-  final String nestUrl = dotenv.env['API_URL'] ?? "http://10.0.2.2:3000";
+  final String nestUrl = dotenv.env['API_URL'] ?? '';
 }
 
 final webConfig = FirebaseOptionsWeb();

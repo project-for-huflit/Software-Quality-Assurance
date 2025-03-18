@@ -8,7 +8,6 @@ class ButtonConfirm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
