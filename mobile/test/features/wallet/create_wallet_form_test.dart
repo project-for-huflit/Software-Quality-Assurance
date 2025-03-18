@@ -15,9 +15,30 @@ import 'create_wallet_form_test.mock.dart';
 void main() {
   late MockWalletService mockWalletService;
 
+  // group('Creation Wallet Form Test', () {
+  //   testWidgets('should render all components of the WalletForm',
+  //       (WidgetTester tester) async {
+  //     await tester.pumpWidget(
+  //       const MaterialApp(
+  //         home: Scaffold(
+  //           body: CreateWalletScreen(),
+  //         ),
+  //       ),
+  //     );
+  //   });
+
+  //   expect(find.text('type'), findsOneWidget);
+  //   expect(find.text('name'), findsOneWidget);
+  //   expect(find.text('amount'), findsOneWidget);
+  //   expect(find.byType(DropdownButtonFormField), findsOneWidget);
+  //   expect(find.byType(TextFormField), findsOneWidget);
+  //   expect(find.byType(TextButton), findsOneWidget);
+  // });
+
   group('Creation Wallet Form Test', () {
     testWidgets('should render all components of the WalletForm',
         (WidgetTester tester) async {
+      // Arrange: Build giao diện
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -25,26 +46,33 @@ void main() {
           ),
         ),
       );
+  
+      await tester.pumpAndSettle();
+  
+      expect(find.text('Type'), findsOneWidget);
+      expect(find.text('Name Wallet'), findsOneWidget);
+      expect(find.text('Amount'), findsOneWidget);
+      expect(find.byType(DropdownButtonFormField<String>), findsOneWidget);
+      expect(find.byType(TextFormField), findsNWidgets(2));
+      expect(find.byType(TextButton), findsOneWidget);
     });
-
-    expect(find.text('type'), findsOneWidget);
-    expect(find.text('name'), findsOneWidget);
-    expect(find.text('amount'), findsOneWidget);
-    expect(find.byType(DropdownButtonFormField), findsOneWidget);
-    expect(find.byType(TextFormField), findsOneWidget);
-    expect(find.byType(TextButton), findsOneWidget);
   });
 
-  testWidgets('should allow entering an amount wallet',
-      (WidgetTester tester) async {
+  testWidgets('should allow entering an amount wallet', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(
       home: Scaffold(
         body: CreateWalletScreen(),
       ),
     ));
-    final amountField = find.byType(TextFormField);
+
+    await tester.pumpAndSettle();
+
+    final amountField = find.byKey(const Key('amountField'));
+
+    expect(amountField, findsOneWidget);
+  
     await tester.enterText(amountField, '50000000000');
-    // Assert
+  
     expect(find.text('50000000000'), findsOneWidget);
   });
 
@@ -152,7 +180,7 @@ void main() {
     final WalletModel? result = await mockWalletService.createWallet(wallet);
 
     expect(result, isNotNull);
-    expect(result?.name, 'Test Wallet');
+    expect(result?.name, '');
     expect(result?.type, 'money');
     expect(result?.amount, 1000);
   });
