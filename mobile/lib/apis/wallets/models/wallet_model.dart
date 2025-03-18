@@ -20,8 +20,6 @@ class WalletModel {
         name = json['name'],
         type = json['type'],
         amount = json['amount'] ?? 0,
-        // createdAt = json['createdAt'],
-        // updatedAt = json['updatedAt'];
         createdAt = json['createdAt'] != null
           ? DateTime.fromMillisecondsSinceEpoch(json['createdAt']['_seconds'] * 1000)
           : null,
