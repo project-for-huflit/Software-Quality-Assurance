@@ -67,11 +67,10 @@ class _IncomeFormState extends State<IncomeForm> {
   String? selectedAccount;
 
   Future<void> _fetchCategories() async {
-    // final cateIncomeService = Provider.of<CateIncomeServices>(context, listen: false);
     try {
       List<CategoryIncomeModel> categories = await CateIncomeServices().listCateIncome();
       setState(() {
-        incomeCategories = categories.map((category) => category.name).toList();
+        incomeCategories = [...categories.map((category) => category.name)];
       });
     } catch (e) {
       print('Lỗi tải danh mục: $e');
