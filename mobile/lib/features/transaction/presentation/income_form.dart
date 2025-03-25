@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:mobile/apis/income/income_api.dart';
 import 'package:mobile/apis/income/models/income_model.dart';
 import 'package:mobile/features/transaction/presentation/bottom_sheet_cate.dart';
 import 'package:mobile/features/transaction/service/gemini_service.dart';
+import 'package:mobile/features/transaction/service/ocr_service.dart';
 import 'package:mobile/features/transaction/widget/board_date_time_picker.dart';
 import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -38,13 +40,20 @@ class _IncomeFormState extends State<IncomeForm> {
     if (image == null) return;
     setState(() => _selectedImage = image);
 
-    final text = await TextRecognitionService.recognizeText(image);
-    setState(() => _recognizedText = text);
-    print('Dữ liệu OCR: $_recognizedText');
     try {
-      await _geminiService.processText(_recognizedText, 'tiền chi');
+      // Chuyển đổi ảnh thành base64
+      List<int> imageBytes = await image.readAsBytes();
+      String imageBase64 = base64Encode(imageBytes);
+
+      // Gửi ảnh đến OCR và nhận kết quả
+      String? recognizedText = await OCRService.sendImageToOCR("thu",imageBase64);
+
+      if (recognizedText != null) {
+        setState(() => _recognizedText = recognizedText);
+        print('Dữ liệu OCR: $_recognizedText');
+      }
     } catch (e) {
-      print('Lỗi xử lý Gemini: $e');
+      print('Lỗi xử lý ảnh: $e');
     }
   }
 
