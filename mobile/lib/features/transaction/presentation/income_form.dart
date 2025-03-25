@@ -74,6 +74,7 @@ class _IncomeFormState extends State<IncomeForm> {
         incomeCategories = categories.map((category) => category.name).toList();
       });
     } catch (e) {
+      // ignore: avoid_print
       print('Lỗi tải danh mục: $e');
     }
   }
