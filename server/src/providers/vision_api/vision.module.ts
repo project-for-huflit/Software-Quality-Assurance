@@ -1,22 +1,19 @@
 import { Module } from '@nestjs/common';
 import { VisionService } from './vision.service';
 import { VisionController } from '@/providers/vision_api/vision.controller';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import * as vision from '@google-cloud/vision';
-import * as path from 'path';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-	imports: [ConfigModule],
+	imports: [ConfigModule, HttpModule],
 	controllers: [VisionController],
 	providers: [
 		{
 			provide: vision.ImageAnnotatorClient,
-			useFactory: (configService: ConfigService) => {
-				return new vision.ImageAnnotatorClient({
-					keyFilename: configService.get('VISION_API'),
-				});
+			useFactory: () => {
+				return new vision.ImageAnnotatorClient();
 			},
-			inject: [ConfigService],
 		},
 		VisionService,
 	],

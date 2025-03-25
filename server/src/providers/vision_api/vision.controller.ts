@@ -6,8 +6,8 @@ export class VisionController {
 	constructor(private readonly visionService: VisionService) {}
 
 	@Post('detect-text')
-	async detectText(@Body('imagePath') imagePath: string) {
-		const texts = await this.visionService.detectText(imagePath);
+	async detectText(@Body('image') image: string) {
+		const texts = await this.visionService.detectText(image);
 		return { texts };
 	}
 }

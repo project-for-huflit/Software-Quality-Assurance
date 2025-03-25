@@ -28,6 +28,10 @@ import { FirestoreModule } from '@/providers/firestore';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { VisionModule } from './providers/vision_api/vision.module';
+import { GeminiModule } from './gemini/gemini.module';
+import { OcrModule } from '@/modules/ocr/ocr.module';
+import { OcrController } from '@/modules/ocr/ocr.controller';
+import { OcrService } from '@/modules/ocr/ocr.service';
 
 @Module({
 	imports: [
@@ -70,6 +74,8 @@ import { VisionModule } from './providers/vision_api/vision.module';
 				limit: 1,
 			},
 		]),
+		OcrModule,
+		GeminiModule,
 		VisionModule,
 		NotificationModule,
 		WalletModule,
@@ -78,8 +84,9 @@ import { VisionModule } from './providers/vision_api/vision.module';
 		FileManagementModule,
 		Cate_incomeModule,
 		Cate_expenseModule,
+		OcrModule,
 	],
-	controllers: [AppController],
+	controllers: [AppController, OcrController],
 	providers: [
 		AppService,
 		{
@@ -90,6 +97,7 @@ import { VisionModule } from './providers/vision_api/vision.module';
 			provide: APP_PIPE,
 			useClass: ValidationPipe,
 		},
+		OcrService,
 	],
 	exports: [],
 })
