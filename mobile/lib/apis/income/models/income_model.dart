@@ -1,32 +1,58 @@
 class IncomeModel {
+  String? id;
   String amount;
   String category;
   String imageUrl;
   DateTime incomeAt;
   String wallet;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   IncomeModel({
+    this.id,
     required this.amount,
     required this.category,
     required this.incomeAt,
     this.imageUrl = '',
     required this.wallet,
+    this.createdAt, 
+    this.updatedAt, 
   });
 
   IncomeModel.formJson(Map<String, dynamic> json)
-      : amount = json['amount'],
+      : id = json['id'],
+        amount = json['amount'],
         category = json['category'],
         imageUrl = json['imageUrl'],
         incomeAt = DateTime.parse(json['incomeAt']),
-        wallet = json['wallet'];
+        wallet = json['wallet'],
+        createdAt = json['createdAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['createdAt']['_seconds'] * 1000)
+          : null,
+        updatedAt = json['updatedAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['updatedAt']['_seconds'] * 1000)
+          : null;
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       "amount": amount,
       "category": category,
       "wallet": wallet,
       "imageUrl": imageUrl,
       "incomeAt": incomeAt.toIso8601String(),
+      "createdAt": createdAt != null
+        ? {
+            "_seconds": createdAt!.millisecondsSinceEpoch ~/ 1000,
+            "_nanoseconds": (createdAt!.millisecondsSinceEpoch % 1000) * 1000000
+          }
+        : null,
+      "updatedAt": updatedAt != null
+        ? {
+            "_seconds": updatedAt!.millisecondsSinceEpoch ~/ 1000,
+            "_nanoseconds": (updatedAt!.millisecondsSinceEpoch % 1000) * 1000000
+          }
+        : null,
     };
   }
 }
