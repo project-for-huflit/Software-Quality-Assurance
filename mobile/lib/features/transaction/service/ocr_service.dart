@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class OCRService {
   static Future<String?> sendImageToOCR(String type, String imageBase64) async {
-    final url = Uri.parse('http://localhost:3000/ocr/process');
+    final url = Uri.parse('http://10.0.2.2:3000/ocr/process');
     try {
       final response = await http.post(
         url,
@@ -14,12 +14,14 @@ class OCRService {
         }),
       );
 
-      if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 201) {
         final responseData = jsonDecode(response.body);
-        print("Response from OCR: ${responseData}");
-        return responseData['text']; // Trả về kết quả OCR
+        print("Response: ${responseData}");
+        return responseData['data'];// Trả về kết quả OCR
       } else {
-        print("Error from OCR: ${response.body}");
+        print("❌ Lỗi từ OCR API (${response.statusCode}): ${responseData['message']}");
         return null;
       }
     } catch (e) {
