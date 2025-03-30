@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile/apis/income/income_api.dart';
 import 'package:mobile/apis/income/models/income_model.dart';
+import 'package:mobile/features/home/presentation/home_screen.dart';
 import 'package:mobile/features/transaction/presentation/bottom_sheet_cate.dart';
-import 'package:mobile/features/transaction/service/gemini_service.dart';
 import 'package:mobile/features/transaction/service/ocr_service.dart';
 import 'package:mobile/features/transaction/widget/board_date_time_picker.dart';
 import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/features/transaction/widget/camera_button.dart';
 import 'package:mobile/features/transaction/widget/recurring_payment.dart';
-import 'package:provider/provider.dart';
 import '../../../apis/categoryIncome/category_income_api.dart';
 import '../../../apis/categoryIncome/model/category_income_model.dart';
 import '../../../apis/wallets/models/wallet_model.dart';
@@ -33,38 +32,49 @@ class _IncomeFormState extends State<IncomeForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   File? _selectedImage;
-  String _recognizedText = '';
-  final GeminiService _geminiService = GeminiService();
+  Map<String, dynamic>? _recognizedText;
 
   Future<void> _handleImageSelected(File? image) async {
     if (image == null) return;
-    setState(() => _selectedImage = image);
+    setState(() {
+      _selectedImage = image;
+      isLoading = true;
+    });
 
     try {
-      // Chuyển đổi ảnh thành base64
       List<int> imageBytes = await image.readAsBytes();
       String imageBase64 = base64Encode(imageBytes);
 
-      // Gửi ảnh đến OCR và nhận kết quả
-      String? recognizedText = await OCRService.sendImageToOCR("thu",imageBase64);
+      Map<String, dynamic>? recognizedText = await OCRService.sendImageToOCR("thu",imageBase64);
+
+      await Future.delayed(const Duration(milliseconds: 3000));
 
       if (recognizedText != null) {
-        setState(() => _recognizedText = recognizedText);
+        setState(() {
+          _amountController.text = recognizedText['totalAmount']['value'].toString();
+          selectedCategory = recognizedText['category'].toString();
+          // selectedDate = recognizedText['date'].toString();
+          _recognizedText = recognizedText;
+        });
         print('Dữ liệu OCR: $_recognizedText');
       }
     } catch (e) {
       print('Lỗi xử lý ảnh: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
-  @override
-  void dispose() {
-    TextRecognitionService.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   TextRecognitionService.dispose();
+  //   super.dispose();
+  // }
 
   final TextEditingController _amountController = TextEditingController();
-  final NumberFormat _currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+  // final NumberFormat _currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
 
   late List<String> accountItems = [];
 
@@ -82,7 +92,6 @@ class _IncomeFormState extends State<IncomeForm> {
         incomeCategories = [...categories.map((category) => category.name)];
       });
     } catch (e) {
-      // ignore: avoid_print
       print('Lỗi tải danh mục: $e');
     }
   }
@@ -103,13 +112,20 @@ class _IncomeFormState extends State<IncomeForm> {
           amount: _amountController.text,
           category: selectedCategory!,
           incomeAt: DateFormat('yyyy-MM-dd').parse(selectedDate!),
-          wallet: selectedAccount!
+          wallet: selectedAccount!.split(' (')[0]
       );
        await IncomeServices().createIncome(newIncome);
 
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Tạo thu nhập thành công!"))
       );
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+            const HomeScreen(),
+          ));
 
     } catch (e){
       ScaffoldMessenger.of(context).showSnackBar(
@@ -126,7 +142,7 @@ class _IncomeFormState extends State<IncomeForm> {
     try {
       List<WalletModel> wallets = await WalletServices().listWallet();
       setState(() {
-        accountItems = wallets.map((wallet) => wallet.name).toList();
+        accountItems = wallets.map((wallet) => "${wallet.name} (${wallet.type})").toList();
       });
     } catch (e) {
       print('Lỗi tải ví: $e');
@@ -310,7 +326,7 @@ class _IncomeFormState extends State<IncomeForm> {
                         // Add more decoration..
                       ),
                       hint: const Text(
-                        'Account',
+                        'Wallet',
                         style: TextStyle(fontSize: 16),
                       ),
                       items:  [...accountItems
@@ -382,7 +398,30 @@ class _IncomeFormState extends State<IncomeForm> {
                     _selectedImage != null ?
                     Image.file(_selectedImage!) :
                     const SizedBox.shrink(),
+
+                    if (isLoading)
+                      Positioned.fill(
+                        child: Container(
+                          color: Colors.black.withOpacity(0.5), // Làm tối nền
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Đang xử lý...",
+                                  style: TextStyle(color: Colors.white, fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
+
                 ),
               ),
           ),
@@ -396,6 +435,7 @@ class _IncomeFormState extends State<IncomeForm> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _createIncome();
+
               }
             },
           ),

@@ -2,10 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mobile/apis/categoryExpense/constant/category_expense_url.dart';
 import 'package:mobile/apis/categoryExpense/model/category_expense_model.dart';
-import 'package:mobile/apis/categoryIncome/constant/category_income_url.dart';
-import 'package:mobile/apis/categoryIncome/model/category_income_model.dart';
-import 'package:mobile/apis/wallets/constants/wallet_url.dart';
-import 'package:mobile/apis/wallets/models/wallet_model.dart';
 
 class CateExpenseServices{
   Future<List<CategoryExpenseModel>> listCateExpense() {
@@ -23,14 +19,15 @@ class CateExpenseServices{
 
       const JsonDecoder decoder = JsonDecoder();
 
-      final List<dynamic> cateExpenseList = decoder.convert(jsonBody);
+      final Map<String, dynamic> decodedJson = decoder.convert(jsonBody);
+      final List<dynamic> cateExpenseList = decodedJson['data'];
       // ignore: avoid_print
       // print(walletList);
       return cateExpenseList.map((cateExpenseRaw) => CategoryExpenseModel.formJson(cateExpenseRaw)).toList();
     });
   }
 
-  Future<CategoryExpenseModel?> createCateIncome(CategoryExpenseModel category) async {
+  Future<CategoryExpenseModel?> createCateExpense(CategoryExpenseModel category) async {
     return await http
         .post(
       categoryExpenseUrls.API_CREATE_CATEGORY_EXPENSE,
@@ -43,7 +40,7 @@ class CateExpenseServices{
       final String jsonBody = response.body;
       final int statusCode = response.statusCode;
 
-      if(statusCode != 200){
+      if(statusCode != 200 && statusCode != 201){
         // ignore: avoid_print
         print("⚠️ Error: $statusCode - $jsonBody");
         throw Exception("Error load api");

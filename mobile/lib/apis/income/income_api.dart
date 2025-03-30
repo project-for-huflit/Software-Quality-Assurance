@@ -40,18 +40,20 @@ class IncomeServices{
       final String jsonBody = response.body;
       final int statusCode = response.statusCode;
 
-      if(statusCode != 200){
+      if(statusCode != 200 && statusCode != 201){
         // ignore: avoid_print
         print("⚠️ Error: $statusCode - $jsonBody");
         throw Exception("Error load api");
       }
 
-      const JsonDecoder decoder = JsonDecoder();
+      // const JsonDecoder decoder = JsonDecoder();
+      //
+      // final dynamic responseCreateIncome = decoder.convert(jsonBody);
 
-      final dynamic responseCreateIncome = decoder.convert(jsonBody);
-      // ignore: avoid_print
-      print(responseCreateIncome);
-      return responseCreateIncome;
+      final IncomeModel responseIncome = IncomeModel.formJson(jsonDecode(jsonBody));
+
+      print(responseIncome);
+      return responseIncome;
     }
     ).catchError((e) {
       // ignore: avoid_print

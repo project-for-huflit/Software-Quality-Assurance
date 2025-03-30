@@ -83,7 +83,6 @@ class _BottomSheetCateState extends State<BottomSheetCate> {
     }
   }
 
-
   void _showAddCategoryDialog(BuildContext context) {
     showDialog(
       context: context,

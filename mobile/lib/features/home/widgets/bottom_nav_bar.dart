@@ -49,10 +49,14 @@ class BottomNavBarWidget extends StatelessWidget {
               customBorder: const CircleBorder(),
               splashColor: Colors.orange.withOpacity(0.4),
               onTap: () {
+                // Navigator.pushNamed(context, '/transaction');
                 Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (context) => const Transaction()),
-                );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                      const Transaction(),
+                    ));
+
               },
               child: Container(
                 decoration: const BoxDecoration(

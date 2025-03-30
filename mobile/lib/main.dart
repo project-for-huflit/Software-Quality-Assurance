@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mobile/features/transaction/presentation/transaction.dart';
 import 'package:mobile/features/wallet/screens/app.dart';
 import '/features/auth/login/presentation/login_screen.dart';
 import '/features/auth/register/presentation/register_screen.dart';
@@ -58,14 +60,29 @@ class TrackingApp extends StatelessWidget {
         '/': (context) => const FirstScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
+        '/home': (context) => const HomeScreen(),
         '/wallet': (context) => const WalletScreen(),
         '/wallet/create': (context) => const CreateWalletScreen(),
         // '/wallet': (context) => const WalletScreen(),
         // '/feed': (context) => Feed (currentUser: data.user_0),
         '/setting': (context) => const SettingsScreen(),
-        '/home': (context) => const HomeScreen(),
       },
-      
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/transaction':
+            return CupertinoPageRoute(
+              builder: (context) => const Transaction(),
+            );
+          case '/home':
+            return MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            );
+          default:
+            return MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            );
+        }
+    },
     );
   }
 }

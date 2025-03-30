@@ -5,6 +5,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobile/apis/categoryIncome/category_income_api.dart';
 import 'package:mobile/apis/categoryIncome/model/category_income_model.dart';
 
+import '../../../apis/categoryExpense/category_expense_api.dart';
+import '../../../apis/categoryExpense/model/category_expense_model.dart';
+
 class DialogAddCate extends StatefulWidget {
   final Function(String) onCategoryAdded;
   final bool isIncome;
@@ -70,11 +73,19 @@ class _DialogAddCateState extends State<DialogAddCate> {
     await Future.delayed(const Duration(milliseconds: 3000));
 
     try {
-      CategoryIncomeModel newCateIncome = CategoryIncomeModel(
-        name: _controller.text.trim(),
-      );
+      String categoryName = _controller.text.trim();
+      if (categoryName.isEmpty) {
+        _showError("Tên danh mục không được để trống!");
+        return;
+      }
 
-      await CateIncomeServices().createCateIncome(newCateIncome);
+      if (widget.isIncome) {
+        CategoryIncomeModel newCateIncome = CategoryIncomeModel(name: categoryName);
+        await CateIncomeServices().createCateIncome(newCateIncome);
+      } else {
+        CategoryExpenseModel newCateExpense = CategoryExpenseModel(name: categoryName);
+        await CateExpenseServices().createCateExpense(newCateExpense);
+      }
 
       if (mounted) {
         widget.onCategoryAdded(_controller.text.trim());
