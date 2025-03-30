@@ -269,3 +269,9 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+## SRC
+
+https://xuanthulab.net/lenh-scp-copy-file-va-thu-muc-tu-server-ve-may-local-va-nguoc-lai.html
+
+https://duthanhduoc.com/blog/deploy-website-nextjs-hoac-nodejs-len-vps#Truy-cap-den-server-su-dung-root
