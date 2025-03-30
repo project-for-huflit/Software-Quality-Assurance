@@ -26,14 +26,43 @@ export class WalletRepository {
 		}
 	}
 
+	async getWalletByDocumentName(
+		name: string,
+	): Promise<WalletDocument | null | undefined> {
+		const snapshot = await this.collection.where('name', '==', name).get();
+		if (snapshot.empty) {
+			return null;
+		} else {
+			return snapshot.docs[0].data();
+		}
+	}
+
 	async getUpdate(id: string) {
 		const doc = this.collection.doc(id);
 		const snapshot = await doc.get();
-
 		if (!snapshot.exists) {
 			return { doc: null, data: null };
 		} else {
 			return { doc, data: snapshot.data() };
+		}
+	}
+
+	async updateWallet(id: string, data: Partial<WalletDocument>): Promise<void> {
+		try {
+			const querySnapshot = await this.collection.where('id', '==', id).get();
+
+			if (querySnapshot.empty) {
+				throw new Error(`Wallet với ID ${id} không tồn tại!`);
+			}
+
+			const docRef = querySnapshot.docs[0].ref;
+
+			await docRef.update(data);
+
+			this.logger.log(`Wallet ${id} updated successfully`);
+		} catch (error) {
+			this.logger.error(`Error updating wallet ${id}:`, error);
+			throw error;
 		}
 	}
 

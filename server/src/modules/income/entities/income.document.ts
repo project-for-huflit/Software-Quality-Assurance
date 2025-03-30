@@ -7,6 +7,7 @@ export class IncomeDocument {
 	amount: number;
 	category: string;
 	imageUrl?: string | null;
+	wallet: string;
 	incomeAt: Timestamp;
 	createdAt?: Timestamp | null;
 	updatedAt?: Timestamp | null;

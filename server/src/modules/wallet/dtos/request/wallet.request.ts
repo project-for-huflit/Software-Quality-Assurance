@@ -1,4 +1,5 @@
 export class WalletRequestBody {
-	public title: string;
+	public title?: string;
 	public text?: string;
+	public amount?: number;
 }

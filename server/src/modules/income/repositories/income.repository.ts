@@ -4,6 +4,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { getUniqueId } from '@/common/utils';
 
 import { IncomeDocument } from '../entities';
+import { WalletService } from '@/modules/wallet/services';
 
 @Injectable()
 export class IncomeRepository {
@@ -12,6 +13,7 @@ export class IncomeRepository {
 	constructor(
 		@Inject(IncomeDocument.collectionName)
 		private collection: CollectionReference<IncomeDocument>,
+		private readonly walletService: WalletService
 	) {}
 
 	async getIncomeByDocumentId(
@@ -53,6 +55,20 @@ export class IncomeRepository {
 			id?: string;
 		},
 	) {
+		const findWallet = await this.walletService.getItemByName(payload.wallet);
+
+		if (!findWallet) {
+			throw new Error('Wallet không tồn tại!');
+		}
+
+		if (payload.amount < 0){
+			throw new Error('Số tiền phải lớn hơn 0!');
+		}
+
+		findWallet.amount = Number(findWallet.amount) + Number(payload.amount);
+
+		await this.walletService.updateWallet(findWallet.id, { amount: findWallet.amount });
+
 		const validPayload = this.getValidProperties(payload);
 		const document = this.collection.doc(validPayload.id);
 		await document.set(validPayload);
@@ -74,6 +90,7 @@ export class IncomeRepository {
 			amount: document.amount ?? null,
 			category: document.category ?? null,
 			imageUrl: document.imageUrl ?? null,
+			wallet: document.wallet ?? null,
 			incomeAt: document.incomeAt ?? null,
 			createdAt: document.createdAt ?? createdAt,
 			updatedAt: newUpdatedAt ? createdAt : (document.updatedAt ?? null),

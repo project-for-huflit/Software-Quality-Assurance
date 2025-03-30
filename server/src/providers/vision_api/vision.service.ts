@@ -22,7 +22,10 @@ export class VisionService {
 		const requestBody = {
 			requests: [
 				{
-					image:  {"source": {"imageUri": imageBase64 }}, //nếu truyền hình ảnh sửa lại thành {"content": imageBase64}
+					//nếu truyền hình ảnh sửa lại thành {"content": imageBase64}
+					// image:  {"source": {"imageUri": imageBase64 }},
+					image:  {"content": imageBase64},
+
 					features: [{ type: 'TEXT_DETECTION' }],
 				},
 			],

@@ -5,6 +5,7 @@ import { getUniqueId, time } from '@/common/utils';
 
 import { InvoiceFilterDTO } from '../dtos';
 import { InvoiceDocument } from '../entities';
+import { WalletService } from '@/modules/wallet/services';
 
 @Injectable()
 export class InvoiceRepository {
@@ -13,6 +14,7 @@ export class InvoiceRepository {
 	constructor(
 		@Inject(InvoiceDocument.collectionName)
 		private collection: CollectionReference<InvoiceDocument>,
+		private readonly walletService: WalletService
 	) {}
 
 	async getInvoiceByDocumentId(
@@ -50,9 +52,22 @@ export class InvoiceRepository {
 
 	async create(
 		payload: Omit<InvoiceDocument, 'id' > & { 
-			id?: string; isPublished?: boolean | null 
+			id?: string;
 		},
 	) {
+		const findWallet = await this.walletService.getItemByName(payload.wallet);
+		if (!findWallet) {
+			throw new Error('Wallet không tồn tại!');
+		}
+
+		if (payload.amount < 0){
+			throw new Error('Số tiền phải lớn hơn 0!');
+		}
+
+		findWallet.amount = Number(findWallet.amount) - Number(payload.amount);
+
+		await this.walletService.updateWallet(findWallet.id, { amount: findWallet.amount });
+
 		const validPayload = this.getValidProperties(payload);
 		const document = this.collection.doc(validPayload.id);
 		await document.set(validPayload);
@@ -74,6 +89,7 @@ export class InvoiceRepository {
 			amount: document.amount ?? null,
 			category: document.category ?? null,
 			imageUrl: document.imageUrl ?? null,
+			wallet: document.wallet ?? null,
 			invoiceAt: document.invoiceAt ?? null,
 			createdAt: document.createdAt ?? createdAt,
 			updatedAt: newUpdatedAt ? createdAt : (document.updatedAt ?? null),

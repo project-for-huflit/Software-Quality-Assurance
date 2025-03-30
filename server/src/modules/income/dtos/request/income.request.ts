@@ -5,5 +5,6 @@ export class IncomeRequestBody {
 	amount: number;
 	category: string;
 	imageUrl: string;
+	wallet: string;
 	incomeAt: Timestamp;
 }

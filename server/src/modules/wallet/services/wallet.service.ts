@@ -3,6 +3,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { WalletCreationDTO, WalletFilterDTO } from '../dtos';
 import { WalletRequestBody } from '../dtos/request';
 import { WalletRepository } from '../repositories';
+import { WalletDocument } from '@/modules/wallet/entities';
 
 @Injectable()
 export class WalletService {
@@ -16,12 +17,18 @@ export class WalletService {
 		return this.walletRepository.getWalletByDocumentId(id);
 	}
 
+	public async getItemByName(name: string) {
+		return this.walletRepository.getWalletByDocumentName(name);
+	}
+
 	public async create(body: WalletCreationDTO) {
 		return this.walletRepository.create(body);
 	}
 
 	public async update(id: string, body: WalletRequestBody) {
 		const { doc, data } = await this.walletRepository.getUpdate(id);
+
+		console.log('doc::', doc);
 
 		if (!doc || !data) {
 			throw new NotFoundException('Example document does not exist');
@@ -33,6 +40,8 @@ export class WalletService {
 		);
 
 		console.log('response::', response);
+
+		await doc.update(response);
 
 		// const changedKeys = Object.keys(body);
 		// const valuesToUpdate: Partial<AccountRequestBody> = {};
@@ -62,6 +71,9 @@ export class WalletService {
 		return response;
 	}
 
+	async updateWallet(id: string, data: Partial<WalletDocument>): Promise<void> {
+		return this.walletRepository.updateWallet(id, data);
+	}
 	public async togglePublish(id: string) {
 		const { doc, data } = await this.walletRepository.getUpdate(id);
 

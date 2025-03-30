@@ -5,5 +5,6 @@ export class InvoiceRequestBody {
 	amount: number;
 	category: string;
 	imageUrl: string;
+	wallet: string;
 	invoiceAt: Timestamp;
 }

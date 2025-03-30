@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { VisionService } from '@/providers/vision_api/vision.service';
-import { GeminiService } from '@/gemini/gemini.service';
+import { GeminiService } from '@/modules/gemini/gemini.service';
 
 @Injectable()
 export class OcrService {
@@ -10,9 +10,16 @@ export class OcrService {
 	) {}
 
 	async processImage(type: string, imageBase64: string) {
-		const extractedTexts = await this.visionService.detectText(imageBase64);
-		const textContent = extractedTexts.join(' ');
+		try {
+			const extractedTexts = await this.visionService.detectText(imageBase64);
+			if (!extractedTexts.length) {
+				throw new HttpException('Không phát hiện được chữ trong ảnh', HttpStatus.UNPROCESSABLE_ENTITY);
+			}
 
-		return await this.geminiService.generateText(type, textContent);
+			const textContent = extractedTexts.join(' ');
+			return await this.geminiService.generateText(type, textContent);
+		} catch (error) {
+			throw new HttpException('Lỗi xử lý ảnh', HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }
