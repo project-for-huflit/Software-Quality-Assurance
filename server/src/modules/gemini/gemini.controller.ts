@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { GeminiService } from '@/gemini/gemini.service';
+import { GeminiService } from '@/modules/gemini/gemini.service';
 
 @Controller('gemini')
 export class GeminiController {

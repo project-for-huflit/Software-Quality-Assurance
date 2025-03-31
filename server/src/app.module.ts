@@ -28,7 +28,7 @@ import { FirestoreModule } from '@/providers/firestore';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { VisionModule } from './providers/vision_api/vision.module';
-import { GeminiModule } from './gemini/gemini.module';
+import { GeminiModule } from './modules/gemini/gemini.module';
 import { OcrModule } from '@/modules/ocr/ocr.module';
 import { OcrController } from '@/modules/ocr/ocr.controller';
 import { OcrService } from '@/modules/ocr/ocr.service';

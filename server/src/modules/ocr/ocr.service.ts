@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { VisionService } from '@/providers/vision_api/vision.service';
-import { GeminiService } from '@/gemini/gemini.service';
+import { GeminiService } from '@/modules/gemini/gemini.service';
 
 @Injectable()
 export class OcrService {
