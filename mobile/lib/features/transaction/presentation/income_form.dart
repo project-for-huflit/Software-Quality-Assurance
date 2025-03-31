@@ -200,6 +200,7 @@ class _IncomeFormState extends State<IncomeForm> {
                     const SizedBox(height: 16),
                     // Amount TextFormField
                     TextFormField(
+                      key: Key("amountIncome"),
                       validator: (value){
                         if (value == null || value.isEmpty) {
                           return 'Vui lòng nhập số tiền.';
@@ -220,6 +221,7 @@ class _IncomeFormState extends State<IncomeForm> {
 
                     // Category showmodal
                     FormField<String>(
+                      key: Key("categoryIncome"),
                       validator: (value) {
                         if (selectedCategory == null) {
                           return 'Vui lòng chọn danh mục';
@@ -291,6 +293,7 @@ class _IncomeFormState extends State<IncomeForm> {
 
                     // DateTime Picker
                     Container(
+                      key: Key("dateIncome"),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black54),
                         borderRadius: BorderRadius.circular(16),
