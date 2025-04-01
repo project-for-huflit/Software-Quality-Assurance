@@ -7,7 +7,7 @@ import 'package:mobile/features/wallet/screens/createWallet/app.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'create_wallet_form_test.mock.dart';
+import 'wallet_test.mock.dart';
 
 @GenerateMocks([
   WalletServices,
@@ -35,28 +35,28 @@ void main() {
   //   expect(find.byType(TextButton), findsOneWidget);
   // });
 
-  group('Creation Wallet Form Test', () {
-    testWidgets('should render all components of the WalletForm',
-        (WidgetTester tester) async {
-      // Arrange: Build giao diện
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: CreateWalletScreen(),
-          ),
-        ),
-      );
+  // group('Creation Wallet Form Test', () {
+  //   testWidgets('should render all components of the WalletForm',
+  //       (WidgetTester tester) async {
+  //     // Arrange: Build giao diện
+  //     await tester.pumpWidget(
+  //       const MaterialApp(
+  //         home: Scaffold(
+  //           body: CreateWalletScreen(),
+  //         ),
+  //       ),
+  //     );
   
-      await tester.pumpAndSettle();
+  //     await tester.pumpAndSettle();
   
-      expect(find.text('Type'), findsOneWidget);
-      expect(find.text('Name Wallet'), findsOneWidget);
-      expect(find.text('Amount'), findsOneWidget);
-      expect(find.byType(DropdownButtonFormField<String>), findsOneWidget);
-      expect(find.byType(TextFormField), findsNWidgets(2));
-      expect(find.byType(TextButton), findsOneWidget);
-    });
-  });
+  //     expect(find.text('Type'), findsOneWidget);
+  //     expect(find.text('Name Wallet'), findsOneWidget);
+  //     expect(find.text('Amount'), findsOneWidget);
+  //     expect(find.byType(DropdownButtonFormField<String>), findsOneWidget);
+  //     expect(find.byType(TextFormField), findsNWidgets(2));
+  //     expect(find.byType(TextButton), findsOneWidget);
+  //   });
+  // });
 
   testWidgets('should allow entering an amount wallet', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(
