@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 import 'package:mobile/features/transaction/widget/board_date_time_picker.dart';
 import 'package:mobile/features/transaction/widget/button_confirm.dart';
 import 'package:mobile/features/transaction/widget/camera_button.dart';
@@ -19,6 +20,7 @@ import 'package:mobile/features/transaction/service/gemini_service.dart';
 import 'package:mobile/features/transaction/presentation/income_form.dart';
 import 'package:mobile/features/transaction/presentation/bottom_sheet_cate.dart';
 import 'income_form_test.mocks.dart';
+import 'package:mobile/features/transaction/presentation/income_form.dart' as app;
 
 @GenerateMocks([
   IncomeServices,
@@ -160,5 +162,19 @@ void main() {
 
     // Kiểm tra API được gọi
     verify(mockIncomeService.createIncome(any)).called(1);
+  });
+
+  group("Income Form Test", ()
+  {
+    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+    testWidgets("Full App Test", (tester) async{
+      const app.IncomeForm();
+      tester.pumpAndSettle();
+
+      final amountFormFiled = find.byKey(const Key("amountIncome"));
+      final categoryIncome = find.byKey(const Key("categoryIncome"));
+
+    });
   });
 }
